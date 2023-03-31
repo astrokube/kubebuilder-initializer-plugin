@@ -1,0 +1,9 @@
+# See the OWNERS docs: https://git.k8s.io/community/contributors/guide/owners.md
+
+aliases:
+  astrokube-approvers:
+    - [@ivancorrales](https://github.com/ivancorrales)
+    - [@pasqualet](https://github.com/pasqualet)
+  
+  astrokube-reviewers:
+    - [92nqb](https://github.com/92nqb)
