@@ -8,14 +8,14 @@ import (
 	"strings"
 
 	"github.com/go-git/go-billy/v5"
-	memfs "github.com/go-git/go-billy/v5/memfs"
-	git "github.com/go-git/go-git/v5"
+	"github.com/go-git/go-billy/v5/memfs"
+	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
-	memory "github.com/go-git/go-git/v5/storage/memory"
+	"github.com/go-git/go-git/v5/storage/memory"
 )
 
-var repoRegex = regexp.MustCompile("((?P<auth>(.*))(@))?(?P<path>([a-zA-Z0-9./\\-_]+))(#(?P<branch>(.*)))?")
+var repoRegex = regexp.MustCompile(`((?P<auth>(.*))(@))?(?P<path>([a-zA-Z0-9./\-_]+))(#(?P<branch>(.*)))?`)
 
 type GitSource struct {
 	url       string
@@ -25,7 +25,7 @@ type GitSource struct {
 	refOrigin string
 }
 
-func NewGitSource(conn string) (s *GitSource) {
+func NewGitSource(conn string) *GitSource {
 	match := repoRegex.FindStringSubmatch(conn)
 
 	paramsMap := make(map[string]string)
@@ -34,7 +34,7 @@ func NewGitSource(conn string) (s *GitSource) {
 			paramsMap[name] = match[i]
 		}
 	}
-
+	s := &GitSource{}
 	if authVal, ok := paramsMap["auth"]; ok && authVal != "" {
 		if strings.Contains(authVal, ":") {
 			authValParts := strings.Split(authVal, ":")
@@ -51,15 +51,16 @@ func NewGitSource(conn string) (s *GitSource) {
 	s.refOrigin = "origin"
 	s.branch = paramsMap["branch"]
 	s.url = fmt.Sprintf("https://%s", paramsMap["path"])
-	return
+	return s
 }
 
-func (s *GitSource) GetTemplateContent() (out map[string]string, err error) {
-	if err = s.loadFileSystem(); err != nil {
-		return
+func (s *GitSource) GetTemplateContent() (map[string]string, error) {
+	if err := s.loadFileSystem(); err != nil {
+		return nil, err
 	}
-	err = s.iterateOverTheFiles("/", out)
-	return
+	var out map[string]string
+	err := s.iterateOverTheFiles("/", out)
+	return out, err
 }
 
 func (s *GitSource) loadFileSystem() error {
@@ -90,7 +91,7 @@ func (s *GitSource) loadFileSystem() error {
 func (s *GitSource) iterateOverTheFiles(path string, files map[string]string) error {
 	resources, err := s.fs.ReadDir(path)
 	if err != nil {
-		return err
+		return fmt.Errorf("error reading folder '%s' from repository: '%w", path, err)
 	}
 	for _, resource := range resources {
 		filename := filepath.Join(path, resource.Name())
@@ -102,11 +103,11 @@ func (s *GitSource) iterateOverTheFiles(path string, files map[string]string) er
 		}
 		src, err := s.fs.Open(filename)
 		if err != nil {
-			return err
+			return fmt.Errorf("error opening file '%s' from repository: '%w", filename, err)
 		}
 		bytes := make([]byte, resource.Size())
 		if _, err = src.Read(bytes); err != nil {
-			return err
+			return fmt.Errorf("error reading file '%s' from repository: '%w", filename, err)
 		}
 		files[filename] = string(bytes)
 	}

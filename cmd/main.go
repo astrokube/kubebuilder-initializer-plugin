@@ -9,24 +9,24 @@ import (
 	"os"
 
 	"github.com/astrokube/layout-kubebuilder-plugin/internal/command"
+	"sigs.k8s.io/kubebuilder/v3/pkg/plugin"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin/external"
 )
 
 func main() {
 	request := &external.PluginRequest{}
 	if err := readPluginRequest(request); err != nil {
-		processError(err)
+		processError(request, err)
 	}
 
 	response := command.Run(request)
 
 	output, err := json.Marshal(response)
 	if err != nil {
-		processError(fmt.Errorf("encountered error marshaling output: %w | OUTPUT: %s", err, output))
+		processError(request, fmt.Errorf("encountered error marshaling output: %w | OUTPUT: %s", err, output))
 	}
 
 	fmt.Printf("%s", output)
-
 }
 
 func readPluginRequest(request *external.PluginRequest) error {
@@ -45,12 +45,17 @@ func readPluginRequest(request *external.PluginRequest) error {
 	return nil
 }
 
-func processError(err error) {
+func processError(request *external.PluginRequest, err error) {
 	errResponse := external.PluginResponse{
-		Error: true,
+		APIVersion: request.APIVersion,
+		Command:    request.Command,
+		Metadata:   plugin.SubcommandMetadata{},
+		Universe:   nil,
+		Error:      true,
 		ErrorMsgs: []string{
 			err.Error(),
 		},
+		Flags: nil,
 	}
 	output, err := json.Marshal(errResponse)
 	if err != nil {
@@ -58,5 +63,4 @@ func processError(err error) {
 	}
 
 	fmt.Printf("%s", output)
-
 }

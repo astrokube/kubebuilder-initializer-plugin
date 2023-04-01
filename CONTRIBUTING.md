@@ -10,7 +10,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Code of conduct
 
-Please make sure to read and observe our [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+Please make sure to read and observe our [Contributor Code of Conduct](CODE_OF_CONDUCT,md).
 
 ## Prerequisites
 
@@ -19,10 +19,10 @@ Please make sure to read and observe our [Contributor Code of Conduct](CODE_OF_C
 ## Contributing steps
 
 1. Submit an issue describing your proposed change to the repo in question.
-1. The [repo owners](OWNERS) will respond to your issue promptly.
-1. If your proposed change is accepted, and you haven't already done so, sign a Contributor License Agreement (see details above).
-1. Fork the desired repo, develop and test your code changes.
-1. Submit a pull request.
+2. The [repo owners](OWNERS) will respond to your issue promptly.
+3. If your proposed change is accepted, and you haven't already done so, sign a Contributor License Agreement (see details above).
+4. Fork the desired repo, develop and test your code changes.
+5. Submit a pull request.
 
 ## How to build the Layout Kubebuilder plugin locally
 

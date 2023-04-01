@@ -29,7 +29,9 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 		Command:    request.Command,
 		Universe:   request.Universe,
 	}
+
 	var err error
+
 	switch request.Command {
 	case ActionInit:
 		flagSet := processFlags(request, initFlags)
@@ -45,6 +47,7 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 	default:
 		err = fmt.Errorf("unknown command '%s'", request.Command)
 	}
+
 	if err != nil {
 		response.Error = true
 		response.ErrorMsgs = []string{err.Error()}
@@ -65,7 +68,6 @@ func processFlags(request *external.PluginRequest, flags []external.Flag) *pflag
 		default:
 			flagsSet.String(f.Name, f.Default, f.Usage)
 		}
-
 	}
 	_ = flagsSet.Parse(request.Args)
 

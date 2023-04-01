@@ -20,7 +20,6 @@ func runFlags(flags *pflag.FlagSet) ([]external.Flag, error) {
 	initFlag, _ := flags.GetBool(flagInit)
 	if initFlag {
 		return initFlags, nil
-	} else {
-		return nil, fmt.Errorf("unrecognized flag")
 	}
+	return nil, fmt.Errorf("unrecognized flag")
 }

@@ -63,11 +63,6 @@ func runInit(flags *pflag.FlagSet) (map[string]string, error) {
 
 	templater.TemplateFromRepository(from)
 	**/
-	println("---")
-	flags.Visit(func(flag *pflag.Flag) {
-		println(flag.Name)
-		println(flag.Value.String())
-	})
 	source, _ := flags.GetString(flagSource)
 	from, _ := flags.GetString(flagFrom)
 	return templatizer.Templatize(source, from, nil)
