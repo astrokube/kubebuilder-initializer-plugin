@@ -8,16 +8,6 @@ import (
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin/external"
 )
 
-//type Command func(*external.PluginRequest) external.PluginResponse
-
-type Command interface {
-	name() string
-	flags() []external.Flag
-	run(*pflag.FlagSet, *external.PluginResponse)
-}
-
-type cmdKey string
-
 const (
 	flagLicense = "license"
 	flagOwner   = "owner"
@@ -28,53 +18,56 @@ const (
 )
 
 const (
-	ActionFlags    cmdKey = "flags"
-	ActionInit     cmdKey = "init"
-	ActionMetadata cmdKey = "metadata"
+	ActionFlags    = "flags"
+	ActionInit     = "init"
+	ActionMetadata = "metadata"
 )
 
-var cmdMap = map[cmdKey]Command{
-	ActionFlags:    &flagsCmd{},
-	ActionMetadata: &metadataCmd{},
-	ActionInit:     &initCmd{},
-}
-
 func Run(request *external.PluginRequest) external.PluginResponse {
-	cmd, ok := cmdMap[cmdKey(request.Command)]
-	if !ok {
-		return external.PluginResponse{
-			Error: true,
-			ErrorMsgs: []string{
-				"unknown subcommand:" + request.Command,
-			},
-		}
-	}
-	response := &external.PluginResponse{
+	var response = external.PluginResponse{
 		APIVersion: info.Version(),
-		Command:    cmd.name(),
+		Command:    request.Command,
 		Universe:   request.Universe,
 	}
-	flags := processFlags(cmd, request.Args)
-	cmd.run(flags, response)
-	return *response
+	var err error
+	switch request.Command {
+	case ActionInit:
+		flagSet := processFlags(request, initFlags)
+		response.Universe, err = runInit(flagSet)
+	case ActionFlags:
+		flagSet := processFlags(request, flagsFlags)
+		response.Flags, err = runFlags(flagSet)
+	case ActionMetadata:
+		flagSet := processFlags(request, metadataFlags)
+		response.Metadata, err = runMetadata(flagSet)
+	case "":
+		err = fmt.Errorf("missing command")
+	default:
+		err = fmt.Errorf("unknown command '%s'", request.Command)
+	}
+	if err != nil {
+		response.Error = true
+		response.ErrorMsgs = []string{err.Error()}
+	}
+	return response
 }
 
-func processFlags(cmd Command, args []string) *pflag.FlagSet {
-	flags := pflag.NewFlagSet(fmt.Sprintf("%sFlags", cmd.name()), pflag.ContinueOnError)
-	for _, f := range cmd.flags() {
+func processFlags(request *external.PluginRequest, flags []external.Flag) *pflag.FlagSet {
+	flagsSet := pflag.NewFlagSet(fmt.Sprintf("%sFlags", request.Command), pflag.ContinueOnError)
+	for _, f := range flags {
 		switch f.Type {
 		case "string":
-			flags.String(f.Name, f.Default, f.Usage)
+			flagsSet.String(f.Name, f.Default, f.Usage)
 		case "boolean":
-			flags.Bool(f.Name, f.Default == "true", f.Usage)
+			flagsSet.Bool(f.Name, f.Default == "true", f.Usage)
 		case "array":
-			flags.StringArray(f.Name, []string{}, f.Usage)
+			flagsSet.StringArray(f.Name, []string{}, f.Usage)
 		default:
-			flags.String(f.Name, f.Default, f.Usage)
+			flagsSet.String(f.Name, f.Default, f.Usage)
 		}
 
 	}
-	_ = flags.Parse(args)
+	_ = flagsSet.Parse(request.Args)
 
-	return flags
+	return flagsSet
 }

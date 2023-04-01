@@ -1,9 +1,9 @@
 package info
 
 func Author() string {
-	return "The Astrokube Team <hello@astrokube.com>"
+	return "The Astrokube Team <developer@astrokube.com>"
 }
 
 func Version() string {
-	return "v1"
+	return "v1alpha"
 }
