@@ -22,16 +22,19 @@ func TestRun(t *testing.T) {
 				Command: "invalidCommand",
 			}},
 			want: external.PluginResponse{
-				Error:     true,
-				ErrorMsgs: []string{"unknown command 'invalidCommand'"},
+				APIVersion: "v1alpha",
+				Command:    "invalidCommand",
+				Error:      true,
+				ErrorMsgs:  []string{"unknown command 'invalidCommand'"},
 			},
 		},
 		{
 			name: "missing command",
 			args: args{request: &external.PluginRequest{}},
 			want: external.PluginResponse{
-				Error:     true,
-				ErrorMsgs: []string{"missing command"},
+				APIVersion: "v1alpha",
+				Error:      true,
+				ErrorMsgs:  []string{"missing command"},
 			},
 		},
 		{
@@ -41,8 +44,10 @@ func TestRun(t *testing.T) {
 				Command: "metadata",
 			}},
 			want: external.PluginResponse{
-				Error:     true,
-				ErrorMsgs: []string{"unrecognized flag"},
+				APIVersion: "v1alpha",
+				Command:    "metadata",
+				Error:      true,
+				ErrorMsgs:  []string{"unrecognized flag"},
 			},
 		},
 	}
