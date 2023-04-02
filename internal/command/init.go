@@ -8,7 +8,6 @@ import (
 )
 
 var initFlags = []external.Flag{
-
 	{
 		Name:    "vars",
 		Type:    "string",
