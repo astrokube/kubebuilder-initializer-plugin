@@ -1,15 +1,17 @@
 package templatizer
 
 import (
-	"bytes"
 	"fmt"
+
+	"os"
 	"strings"
-	"text/template"
 
 	"github.com/astrokube/layout-kubebuilder-plugin/pkg/templatizer/internal/source"
+	"github.com/astrokube/layout-kubebuilder-plugin/pkg/templatizer/internal/variables"
+	"gopkg.in/yaml.v3"
 )
 
-func Templatize(sourceType string, connString string, vars interface{}) (map[string]string, error) {
+func Templatize(sourceType string, connString string, varsFile string) (map[string]string, error) {
 	var content map[string]string
 	var err error
 	if sourceType == "" || strings.EqualFold(sourceType, "git") {
@@ -17,27 +19,33 @@ func Templatize(sourceType string, connString string, vars interface{}) (map[str
 		if err != nil {
 			return nil, err
 		}
-	} else {
-		return nil, fmt.Errorf("unsupported source '%s'", sourceType)
-	}
-	for k, v := range content {
-		processedFile, err := processTemplateFile(k, v, vars)
+		vars, err := readVarsFile(varsFile)
 		if err != nil {
 			return nil, err
 		}
-		content[k] = processedFile
+		for k, v := range content {
+			processedFile, err := variables.ReplaceVariables(k, v, vars)
+			if err != nil {
+				return nil, err
+			}
+			content[k] = processedFile
+		}
+		return content, nil
 	}
-	return content, nil
+	return nil, fmt.Errorf("unsupported source '%s'", sourceType)
 }
 
-func processTemplateFile(name string, content string, variables interface{}) (string, error) {
-	t, err := template.New(name).Parse(content)
+func readVarsFile(path string) (interface{}, error) {
+	data, err := os.ReadFile(path)
 	if err != nil {
-		return "", fmt.Errorf("error parsing file: '%w'", err)
+		return nil, fmt.Errorf("error reading file with variables: '%v'", err)
 	}
-	buf := &bytes.Buffer{}
-	if err := t.Execute(buf, variables); err != nil {
-		return "", fmt.Errorf("error processing template: %w", err)
+	var out interface{}
+	err = yaml.Unmarshal(data, &out)
+	if err != nil {
+		return nil, fmt.Errorf("error unmarshaling file with variables: '%v'", err)
 	}
-	return buf.String(), nil
+
+	return out, nil
+
 }

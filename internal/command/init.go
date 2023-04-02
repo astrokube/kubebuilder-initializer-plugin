@@ -8,29 +8,12 @@ import (
 )
 
 var initFlags = []external.Flag{
+
 	{
-		Name:    flagLicense,
-		Type:    "string",
-		Default: "apache2",
-		Usage:   "license to use to boilerplate, may be one of 'apache2', 'none'",
-	},
-	{
-		Name:    flagOwner,
+		Name:    "vars",
 		Type:    "string",
 		Default: "",
-		Usage:   "owner to add to the copyright",
-	},
-	{
-		Name:    flagRepo,
-		Type:    "string",
-		Default: "",
-		Usage:   "repository name (e.g., github.com/user/repo).",
-	},
-	{
-		Name:    "params",
-		Type:    "array",
-		Default: "",
-		Usage:   "repository name (e.g., github.com/user/repo).",
+		Usage:   "path to the file that contains the variables to be used. By default the plugin uses the file in path .kubebuilder-layout.yaml",
 	},
 	{
 		Name:    flagFrom,
