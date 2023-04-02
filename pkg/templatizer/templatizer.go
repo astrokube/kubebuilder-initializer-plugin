@@ -41,8 +41,8 @@ func readVarsFile(path string) (interface{}, error) {
 		return nil, fmt.Errorf("error reading file with variables: '%v'", err)
 	}
 	var out interface{}
-	err = yaml.Unmarshal(data, &out)
-	if err != nil {
+	// nolint:typecheck
+	if err := yaml.Unmarshal(data, &out); err != nil {
 		return nil, fmt.Errorf("error unmarshaling file with variables: '%v'", err)
 	}
 

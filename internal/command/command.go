@@ -9,12 +9,10 @@ import (
 )
 
 const (
-	flagLicense = "license"
-	flagOwner   = "owner"
-	flagRepo    = "repo"
-	flagFrom    = "from"
-	flagSource  = "source"
-	flagInit    = "init"
+	flagVars   = "vars"
+	flagFrom   = "from"
+	flagSource = "source"
+	flagInit   = "init"
 )
 
 const (

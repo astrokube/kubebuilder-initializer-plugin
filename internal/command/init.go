@@ -12,7 +12,7 @@ var initFlags = []external.Flag{
 	{
 		Name:    "vars",
 		Type:    "string",
-		Default: "",
+		Default: ".kubebuilder-layout.yaml",
 		Usage:   "path to the file that contains the variables to be used. By default the plugin uses the file in path .kubebuilder-layout.yaml",
 	},
 	{
@@ -33,20 +33,14 @@ var initMetadata = plugin.SubcommandMetadata{
 	$ kubebuilder init --plugins astrokube-layout/v1
 
 	Scaffold with a specific layout:
-	$ kubebuilder init --plugins astrokube-layout/v1 --layout github.com/astronetes/operator-template
+	$ kubebuilder init --plugins astrokube-layout/v1 --layout github.com/astronetes/operator-template --vars custom-vars.yml
 	`,
 }
 
 func runInit(flags *pflag.FlagSet) (map[string]string, error) {
-	/**
-	license, _ := flags.GetString(flagLicense)
-	owner, _ := flags.GetString(flagOwner)
-	repo, _ := flags.GetString(flagRepo)
 
-
-	templater.TemplateFromRepository(from)
-	**/
 	source, _ := flags.GetString(flagSource)
 	from, _ := flags.GetString(flagFrom)
-	return templatizer.Templatize(source, from, nil)
+	vars, _ := flags.GetString(flagVars)
+	return templatizer.Templatize(source, from, vars)
 }
