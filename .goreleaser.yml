@@ -1,0 +1,94 @@
+project_name: layout-kubebuilder-plugin
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    main: ./cmd
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+    mod_timestamp: '{{ .CommitTimestamp }}'
+
+checksum:
+  name_template: '{{ .ProjectName }}_v{{ .Version }}_SHA256SUMS'
+  algorithm: sha256
+
+archives:
+  - format_overrides:
+      - goos: windows
+        format: zip
+
+changelog:
+  use: github
+  sort: asc
+  groups:
+    - title: Features
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 1
+    - title: Others
+      order: 999
+  filters:
+    exclude:
+      - '^docs:'
+      - typo
+      - (?i)foo
+
+release:
+  name_template: "{{.ProjectName}} v{{.Version}}"
+  github:
+    owner: astrokube
+    name: layout-kubebuilder-plugin
+  draft: true
+  prerelease: auto
+  header: |
+    ## New release ({{ .Date }})
+    Welcome to this new release!
+  footer: |
+    ## Thanks!
+    Those were the changes on {{ .Tag }}!
+brews:
+  - name: layout-kubebuilder-plugin
+    homepage: https://github.com/astrokube/homebrew-tools
+    tap:
+      owner: astrokube
+      name: homebrew-tools
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+
+snapcrafts:
+  - id: layout-kubebuilder-plugin
+    builds:
+      - layout-kubebuilder-plugin
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    name: layout-kubebuilder-plugin
+    description: A powerful Kubebuilder plugin to create your operator repository from your base repository.
+    summary: Create your operators taking advantage of your own base repositories.
+    publish: true
+    grade: stable
+    confinement: strict
+    license: Apache-2.0
+    base: core18
+
+nfpms:
+  - id: packages # here we say that artifacts built with nfpm will be identified with `packages` string.
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+publishers:
+  - name: fury.io
+    ids:
+      - packages
+    dir: "{{ dir .ArtifactPath }}"
+    cmd: curl -F package=@{{ .ArtifactName }} https://{{ .Env.FURY_TOKEN }}@push.fury.io/astrokube/
