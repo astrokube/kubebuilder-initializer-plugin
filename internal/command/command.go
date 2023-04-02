@@ -3,7 +3,6 @@ package command
 import (
 	"fmt"
 
-	"github.com/astrokube/layout-kubebuilder-plugin/pkg/info"
 	"github.com/spf13/pflag"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin/external"
 )
@@ -23,7 +22,7 @@ const (
 
 func Run(request *external.PluginRequest) external.PluginResponse {
 	var response = external.PluginResponse{
-		APIVersion: info.Version(),
+		APIVersion: request.APIVersion,
 		Command:    request.Command,
 		Universe:   request.Universe,
 	}

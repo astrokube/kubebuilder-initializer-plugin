@@ -5,8 +5,6 @@ GO_CMD          ?= go
 
 PROJECT_NAME 	:= layout-kubebuilder-plugin
 
-PROJECT_VER  ?= $(shell git describe --tags --always --dirty | sed -e '/^v/s/^v\(.*\)$$/\1/g')
-PROJECT_VER_TAGGED  := $(shell git describe --tags --always --abbrev=0 | sed -e '/^v/s/^v\(.*\)$$/\1/g')
 
 all: init fmt test lint
 
@@ -21,9 +19,9 @@ init: git-hooks tools deps  ## setup hooks & install tools and deps
 clean: test-clean build-clean ## temove the temporary resources
 	@echo "=== $(PROJECT_NAME) === [ clean ]: removing binaries and coverage file..."
 
-
 include build/tools.mk
 include build/deps.mk
 include build/code.mk
 include build/test.mk
+include build/compile.mk
 include build/docker.mk
