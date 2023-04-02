@@ -17,6 +17,12 @@ A powerful Kubebuilder plugin to create your operator repository from your own l
 
 ## Installation
 
+### Prerequisites
+
+This is a plugin for the kubebuilder tool. In case of you haven't installed the tool yet, please visit the 
+[kubebuilder documentation](https://github.com/kubernetes-sigs/kubebuilder) and follow the instructions to get 
+kuberbuilder properly installed in your computer.
+
 ### Homebrew
 
 ### Snap

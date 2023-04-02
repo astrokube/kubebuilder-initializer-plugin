@@ -58,7 +58,7 @@ func (s *GitSource) GetTemplateContent() (map[string]string, error) {
 	if err := s.loadFileSystem(); err != nil {
 		return nil, err
 	}
-	var out map[string]string
+	out := map[string]string{}
 	err := s.iterateOverTheFiles("/", out)
 	return out, err
 }

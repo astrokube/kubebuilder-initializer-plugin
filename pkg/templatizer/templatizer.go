@@ -2,7 +2,6 @@ package templatizer
 
 import (
 	"fmt"
-
 	"os"
 	"strings"
 
@@ -38,14 +37,12 @@ func Templatize(sourceType string, connString string, varsFile string) (map[stri
 func readVarsFile(path string) (interface{}, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return nil, fmt.Errorf("error reading file with variables: '%v'", err)
+		return nil, fmt.Errorf("error reading file with variables: '%w'", err)
 	}
 	var out interface{}
-	// nolint:typecheck
 	if err := yaml.Unmarshal(data, &out); err != nil {
-		return nil, fmt.Errorf("error unmarshaling file with variables: '%v'", err)
+		return nil, fmt.Errorf("error unmarshaling file with variables: '%w'", err)
 	}
 
 	return out, nil
-
 }

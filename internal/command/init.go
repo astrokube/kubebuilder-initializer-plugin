@@ -12,7 +12,8 @@ var initFlags = []external.Flag{
 		Name:    "vars",
 		Type:    "string",
 		Default: ".kubebuilder-layout.yaml",
-		Usage:   "path to the file that contains the variables to be used. By default the plugin uses the file in path .kubebuilder-layout.yaml",
+		Usage: "path to the file that contains the variables to be used. By default the plugin uses the file in path ." +
+			"kubebuilder-layout.yaml",
 	},
 	{
 		Name:    flagFrom,
@@ -32,12 +33,12 @@ var initMetadata = plugin.SubcommandMetadata{
 	$ kubebuilder init --plugins astrokube-layout/v1
 
 	Scaffold with a specific layout:
-	$ kubebuilder init --plugins astrokube-layout/v1 --layout github.com/astronetes/operator-template --vars custom-vars.yml
+	$ kubebuilder init --plugins astrokube-layout/v1 --layout github.com/astronetes/operator-template 
+		--vars custom-vars.yml
 	`,
 }
 
 func runInit(flags *pflag.FlagSet) (map[string]string, error) {
-
 	source, _ := flags.GetString(flagSource)
 	from, _ := flags.GetString(flagFrom)
 	vars, _ := flags.GetString(flagVars)
