@@ -21,10 +21,11 @@ coverage.*
 
 
 ## binary files
-bin
+dist
 
 ## Go vendors
 vendor
 
 ## SonnarQube reports
 golangci-report.xml
+
