@@ -1,7 +1,7 @@
 package command
 
 import (
-	"github.com/astrokube/layout-kubebuilder-plugin/pkg/templatizer"
+	"github.com/astrokube/kubebuilder-layout-plugin/pkg/templatizer"
 	"github.com/spf13/pflag"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin/external"

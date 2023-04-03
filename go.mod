@@ -1,10 +1,18 @@
-module github.com/astrokube/layout-kubebuilder-plugin
+module github.com/astrokube/kubebuilder-layout-plugin
 
 go 1.20
 
 require (
+	github.com/onsi/ginkgo/v2 v2.7.0
+	github.com/onsi/gomega v1.24.2
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/kubebuilder/v3 v3.9.1
+
+)
+
+require (
+	github.com/go-logr/logr v1.2.3 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
 )
 
 require (
@@ -24,7 +32,7 @@ require (
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/skeema/knownhosts v1.1.0 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/pflag v1.0.5
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/mod v0.7.0 // indirect

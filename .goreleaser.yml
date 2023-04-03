@@ -1,4 +1,4 @@
-project_name: layout-kubebuilder-plugin
+project_name: kubebuilder-layout-plugin
 before:
   hooks:
     - go mod download
@@ -45,7 +45,7 @@ release:
   name_template: "{{.ProjectName}} v{{.Version}}"
   github:
     owner: astrokube
-    name: layout-kubebuilder-plugin
+    name: kubebuilder-layout-plugin
   draft: true
   prerelease: auto
   header: |
@@ -55,7 +55,7 @@ release:
     ## Thanks!
     Those were the changes on {{ .Tag }}!
 brews:
-  - name: layout-kubebuilder-plugin
+  - name: kubebuilder-layout-plugin
     homepage: https://github.com/astrokube/homebrew-tools
     tap:
       owner: astrokube
@@ -63,9 +63,9 @@ brews:
       token: "{{ .Env.TAP_GITHUB_TOKEN }}"
 
 snapcrafts:
-  - id: layout-kubebuilder-plugin
+  - id: kubebuilder-layout-plugin
     builds:
-      - layout-kubebuilder-plugin
+      - kubebuilder-layout-plugin
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     replacements:
       darwin: Darwin
@@ -73,7 +73,7 @@ snapcrafts:
       windows: Windows
       386: i386
       amd64: x86_64
-    name: layout-kubebuilder-plugin
+    name: kubebuilder-layout-plugin
     description: A powerful Kubebuilder plugin to create your operator repository from your base repository.
     summary: Create your operators taking advantage of your own base repositories.
     publish: true

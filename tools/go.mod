@@ -1,4 +1,4 @@
-module github.com/astrokube/layout-kubebuilder-plugin/build
+module github.com/astrokube/kubebuilder-layout-plugin/build
 
 go 1.20
 

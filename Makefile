@@ -3,7 +3,7 @@ GO  = GOFLAGS=-mod=readonly go
 
 GO_CMD          ?= go
 
-PROJECT_NAME 	:= layout-kubebuilder-plugin
+PROJECT_NAME 	:= kubebuilder-layout-plugin
 
 
 all: init fmt test lint
