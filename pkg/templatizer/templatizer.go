@@ -18,28 +18,35 @@ func Templatize(sourceType string, connString string, varsFile string) (map[stri
 		if err != nil {
 			return nil, err
 		}
+
 		vars, err := readVarsFile(varsFile)
 		if err != nil {
 			return nil, err
 		}
+		procContent := make(map[string]string, len(content))
 		for k, v := range content {
 			processedFile, err := variables.ReplaceVariables(k, v, vars)
 			if err != nil {
 				return nil, err
 			}
-			content[k] = processedFile
+			procK, err := variables.ReplaceVariables(k, k, vars)
+			if err != nil {
+				return nil, err
+			}
+			procContent[procK] = processedFile
 		}
-		return content, nil
+
+		return procContent, nil
 	}
 	return nil, fmt.Errorf("unsupported source '%s'", sourceType)
 }
 
-func readVarsFile(path string) (interface{}, error) {
+func readVarsFile(path string) (map[string]interface{}, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("error reading file with variables: '%w'", err)
 	}
-	var out interface{}
+	out := make(map[string]interface{}, 0)
 	if err := yaml.Unmarshal(data, &out); err != nil {
 		return nil, fmt.Errorf("error unmarshaling file with variables: '%w'", err)
 	}

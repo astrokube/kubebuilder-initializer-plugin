@@ -9,7 +9,7 @@ func TestAuthor(t *testing.T) {
 	}{
 		{
 			name: "simple test",
-			want: "The Astrokube Team <developer@astrokube.com>",
+			want: "The Astrokube Team <engineering@astrokube.com>",
 		},
 	}
 	for _, tt := range tests {

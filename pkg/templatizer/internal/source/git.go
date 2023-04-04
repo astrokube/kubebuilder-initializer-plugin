@@ -2,7 +2,6 @@ package source
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -58,30 +57,31 @@ func (s *GitSource) GetTemplateContent() (map[string]string, error) {
 	if err := s.loadFileSystem(); err != nil {
 		return nil, err
 	}
-	out := map[string]string{}
+	out := make(map[string]string, 0)
 	err := s.iterateOverTheFiles("/", out)
 	return out, err
 }
 
 func (s *GitSource) loadFileSystem() error {
 	repo, err := git.Clone(memory.NewStorage(), memfs.New(), &git.CloneOptions{
-		URL:             s.url,
-		Auth:            s.auth,
-		Progress:        os.Stdout,
-		InsecureSkipTLS: true,
+		URL:  s.url,
+		Auth: s.auth,
+		//Progress:        os.Stdout,
+		// InsecureSkipTLS: true,
+		SingleBranch: true,
 	})
 	if err != nil {
-		return err
+		return fmt.Errorf("error cloning the repository '%w'", err)
 	}
 	w, err := repo.Worktree()
 	if err != nil {
-		return err
+		return fmt.Errorf("error getting the working tree of the repository '%w'", err)
 	}
 	if s.branch != "" {
 		if err := w.Checkout(&git.CheckoutOptions{
 			Branch: plumbing.NewRemoteReferenceName(s.refOrigin, s.branch),
 		}); err != nil {
-			return err
+			return fmt.Errorf("error checking out branch '%s' from the repository '%w'", s.branch, err)
 		}
 	}
 	s.fs = w.Filesystem
@@ -105,9 +105,14 @@ func (s *GitSource) iterateOverTheFiles(path string, files map[string]string) er
 		if err != nil {
 			return fmt.Errorf("error opening file '%s' from repository: '%w", filename, err)
 		}
+		if resource.Size() == 0 {
+			files[filename] = ""
+			continue
+		}
 		bytes := make([]byte, resource.Size())
 		if _, err = src.Read(bytes); err != nil {
-			return fmt.Errorf("error reading file '%s' from repository: '%w", filename, err)
+			return fmt.Errorf("error reading  '%v' file '%s' size '%v' from repository: '%w", resource, filename,
+				resource.Size(), err)
 		}
 		files[filename] = string(bytes)
 	}

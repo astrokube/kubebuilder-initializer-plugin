@@ -8,5 +8,5 @@ var (
 )
 
 func Author() string {
-	return "The Astrokube Team <developer@astrokube.com>"
+	return "The Astrokube Team <engineering@astrokube.com>"
 }

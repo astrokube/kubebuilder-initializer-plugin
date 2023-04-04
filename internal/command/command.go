@@ -8,10 +8,13 @@ import (
 )
 
 const (
-	flagVars   = "vars"
-	flagFrom   = "from"
-	flagSource = "source"
-	flagInit   = "init"
+	flagVars        = "vars"
+	flagDomain      = "domain"
+	flagRepo        = "repo"
+	flagProjectName = "project-name"
+	flagFrom        = "from"
+	flagSource      = "source"
+	flagInit        = "init"
 )
 
 const (
@@ -24,7 +27,6 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 	var response = external.PluginResponse{
 		APIVersion: request.APIVersion,
 		Command:    request.Command,
-		Universe:   request.Universe,
 	}
 
 	var err error
