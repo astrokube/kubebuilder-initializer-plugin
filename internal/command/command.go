@@ -18,9 +18,11 @@ const (
 )
 
 const (
-	ActionFlags    = "flags"
-	ActionInit     = "init"
-	ActionMetadata = "metadata"
+	ActionFlags         = "flags"
+	ActionInit          = "init"
+	ActionMetadata      = "metadata"
+	ActionCreateAPI     = "create api"
+	ActionCreateWebhook = "create webhook"
 )
 
 func Run(request *external.PluginRequest) external.PluginResponse {
@@ -41,6 +43,10 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 	case ActionMetadata:
 		flagSet := processFlags(request, metadataFlags)
 		response.Metadata, err = runMetadata(flagSet)
+	case ActionCreateAPI:
+		err = fmt.Errorf("[WIP] - Not implemented yet")
+	case ActionCreateWebhook:
+		err = fmt.Errorf("[WIP] - Not implemented yet")
 	case "":
 		err = fmt.Errorf("missing command")
 	default:
