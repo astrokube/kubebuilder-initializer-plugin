@@ -14,7 +14,7 @@ Please make sure to read and observe our [Contributor Code of Conduct](CODE_OF_C
 
 ## Prerequisites
 
-* [go](https://go.dev/doc/install version v1.19+
+* [go](https://go.dev/doc/install version v1.20+
 
 ## Contributing steps
 
