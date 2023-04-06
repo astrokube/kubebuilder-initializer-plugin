@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://img.shields.io/github/license/astrokube/kubebuilder-initializer-plugin))
 [![Build Status](https://img.shields.io/github/workflow/status/astrokube/kubebuilder-initializer-plugin/build)](https://github.com/astrokube/kubebuilder-initializer-plugin/actions?query=workflow%3Abuild+branch%3Amain)
 [![Go Report Card](https://goreportcard.com/badge/github.com/astrokube/kubebuilder-initializer-plugin)](https://goreportcard.com/report/github.com/astrokube/kubebuilder-initializer-plugin)
-[![CodeQL](https://github.com/astrokube/kubebuilder-initializer-plugin/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/astrokube/kubebuilder-initializer-plugin/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/astrokube/kubebuilder-initializer-plugin/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/astrokube/kubebuilder-initializer-plugin/actions/workflows/codeql.yml)
 ---
 
 # Kubebuilder Initializer Plugin
