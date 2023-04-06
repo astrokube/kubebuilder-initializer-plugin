@@ -1,7 +1,7 @@
 GO_VERSION := $(shell cat .go-version)
 GO  = GOFLAGS=-mod=readonly go
 GO_CMD          ?= go
-PROJECT_NAME 	:= kubebuilder-layout-plugin
+PROJECT_NAME 	:= kubebuilder-initializer-plugin
 UNAME := $(shell uname)
 
 all: init fmt test lint compile

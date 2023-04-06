@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	flagVars        = "vars"
+	flagVars = "vars"
+
 	flagDomain      = "domain"
 	flagRepo        = "repo"
 	flagProjectName = "project-name"
@@ -44,9 +45,9 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 		flagSet := processFlags(request, metadataFlags)
 		response.Metadata, err = runMetadata(flagSet)
 	case ActionCreateAPI:
-		err = fmt.Errorf("[WIP] - Not implemented yet")
+		break
 	case ActionCreateWebhook:
-		err = fmt.Errorf("[WIP] - Not implemented yet")
+		break
 	case "":
 		err = fmt.Errorf("missing command")
 	default:

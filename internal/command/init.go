@@ -4,7 +4,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/astrokube/kubebuilder-layout-plugin/pkg/templatizer"
+	"github.com/astrokube/kubebuilder-initializer-plugin/pkg/templatizer"
 	"github.com/spf13/pflag"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin/external"
@@ -14,9 +14,9 @@ var initFlags = []external.Flag{
 	{
 		Name:    "vars",
 		Type:    "string",
-		Default: ".kubebuilder-layout.yaml",
+		Default: ".kubebuilder-initializer.yaml",
 		Usage: "path to the file that contains the variables to be used. By default the plugin uses the file in path ." +
-			"kubebuilder-layout.yaml",
+			"kubebuilder-initializer.yaml",
 	},
 	{
 		Name:    flagFrom,
@@ -26,6 +26,7 @@ var initFlags = []external.Flag{
 			"after the repository path (e.g., github.com/my-organization/my-repo#develop) or the credentials If " +
 			"required (e.g., username:password@github.com/my-organization/my-repo#develop)",
 	},
+	/**
 	{
 		Name:    flagDomain,
 		Type:    "string",
@@ -45,6 +46,7 @@ var initFlags = []external.Flag{
 		Default: "",
 		Usage:   "the name of the project. This will be used to scaffold the manager data",
 	},
+	*/
 }
 
 var initMetadata = plugin.SubcommandMetadata{

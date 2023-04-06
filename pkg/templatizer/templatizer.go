@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/astrokube/kubebuilder-layout-plugin/pkg/templatizer/internal/source"
-	"github.com/astrokube/kubebuilder-layout-plugin/pkg/templatizer/internal/variables"
+	"github.com/astrokube/kubebuilder-initializer-plugin/pkg/templatizer/internal/source"
+	"github.com/astrokube/kubebuilder-initializer-plugin/pkg/templatizer/internal/variables"
 	"gopkg.in/yaml.v3"
 )
 

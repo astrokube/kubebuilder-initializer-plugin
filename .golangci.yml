@@ -40,7 +40,7 @@ linters-settings:
   gofmt:
     simplify: true
   goimports:
-    local-prefixes: github.com/astrokube/kubebuilder-layout-plugin
+    local-prefixes: github.com/astrokube/kubebuilder-initializer-plugin
   gocyclo:
     min-complexity: 25
   gocognit:

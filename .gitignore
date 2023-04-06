@@ -26,6 +26,6 @@ dist
 ## Go vendors
 vendor
 
-## SonnarQube reports
+## Reports
 golangci-report.xml
 
