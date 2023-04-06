@@ -24,13 +24,23 @@ kuberbuilder properly installed in your computer.
 
 ### Homebrew
 
-### Snap
-
 ### Download the executable files
 
 ### Build from the code
 
+```bash
+git clone https://github.com/astrokube/kubebuilder-initializer-plugin.git
+cd kubebuilder-initializer-plugin
+make build install
+```
+
+Keep in mind that the plug-in will be insstalled in the following directory `~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha`
+If your os is OSX or `$HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha` for linux users.
+
 ## How this plugin work
+
+To deep dive into how Kubebuilder deals with external plugins you can visit the following article 
+[Extensible CLI and Scaffolding Plugins - Phase 2](https://github.com/kubernetes-sigs/kubebuilder/blob/master/designs/extensible-cli-and-scaffolding-plugins-phase-2.md) 
 
 ## Contributing
 
