@@ -1,7 +1,10 @@
 package command
 
 import (
-	"github.com/astrokube/layout-kubebuilder-plugin/pkg/templatizer"
+	"os"
+	"path"
+
+	"github.com/astrokube/kubebuilder-initializer-plugin/pkg/templatizer"
 	"github.com/spf13/pflag"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin/external"
@@ -11,9 +14,9 @@ var initFlags = []external.Flag{
 	{
 		Name:    "vars",
 		Type:    "string",
-		Default: ".kubebuilder-layout.yaml",
+		Default: ".kubebuilder-initializer.yaml",
 		Usage: "path to the file that contains the variables to be used. By default the plugin uses the file in path ." +
-			"kubebuilder-layout.yaml",
+			"kubebuilder-initializer.yaml",
 	},
 	{
 		Name:    flagFrom,
@@ -23,6 +26,27 @@ var initFlags = []external.Flag{
 			"after the repository path (e.g., github.com/my-organization/my-repo#develop) or the credentials If " +
 			"required (e.g., username:password@github.com/my-organization/my-repo#develop)",
 	},
+	/**
+	{
+		Name:    flagDomain,
+		Type:    "string",
+		Default: "",
+		Usage:   "store the domain of the project. ",
+	},
+	{
+		Name:    flagRepo,
+		Type:    "string",
+		Default: "",
+		Usage: "name to use for go module (e.g., github.com/user/repo), defaults to the go package of the current " +
+			"working directory.",
+	},
+	{
+		Name:    flagProjectName,
+		Type:    "string",
+		Default: "",
+		Usage:   "the name of the project. This will be used to scaffold the manager data",
+	},
+	*/
 }
 
 var initMetadata = plugin.SubcommandMetadata{
@@ -42,5 +66,23 @@ func runInit(flags *pflag.FlagSet) (map[string]string, error) {
 	source, _ := flags.GetString(flagSource)
 	from, _ := flags.GetString(flagFrom)
 	vars, _ := flags.GetString(flagVars)
-	return templatizer.Templatize(source, from, vars)
+	/**
+	domain, _ := flags.GetString(flagDomain)
+	projectName, _ := flags.GetString(flagProjectName)
+	repo, _ := flags.GetString(flagRepo)
+	**/
+	content, err := templatizer.Templatize(source, from, vars)
+	if err != nil {
+		return content, err
+	}
+	for k := range content {
+		parentDir := path.Dir(k)[1:]
+		if parentDir != "" {
+			if err := os.MkdirAll(parentDir, os.ModePerm); err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	return content, nil
 }

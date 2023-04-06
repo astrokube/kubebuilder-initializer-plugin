@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/astrokube/layout-kubebuilder-plugin/internal/command"
+	"github.com/astrokube/kubebuilder-initializer-plugin/internal/command"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin/external"
 )

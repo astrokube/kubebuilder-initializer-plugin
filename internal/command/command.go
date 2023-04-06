@@ -8,23 +8,28 @@ import (
 )
 
 const (
-	flagVars   = "vars"
-	flagFrom   = "from"
-	flagSource = "source"
-	flagInit   = "init"
+	flagVars = "vars"
+
+	flagDomain      = "domain"
+	flagRepo        = "repo"
+	flagProjectName = "project-name"
+	flagFrom        = "from"
+	flagSource      = "source"
+	flagInit        = "init"
 )
 
 const (
-	ActionFlags    = "flags"
-	ActionInit     = "init"
-	ActionMetadata = "metadata"
+	ActionFlags         = "flags"
+	ActionInit          = "init"
+	ActionMetadata      = "metadata"
+	ActionCreateAPI     = "create api"
+	ActionCreateWebhook = "create webhook"
 )
 
 func Run(request *external.PluginRequest) external.PluginResponse {
 	var response = external.PluginResponse{
 		APIVersion: request.APIVersion,
 		Command:    request.Command,
-		Universe:   request.Universe,
 	}
 
 	var err error
@@ -39,6 +44,10 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 	case ActionMetadata:
 		flagSet := processFlags(request, metadataFlags)
 		response.Metadata, err = runMetadata(flagSet)
+	case ActionCreateAPI:
+		break
+	case ActionCreateWebhook:
+		break
 	case "":
 		err = fmt.Errorf("missing command")
 	default:

@@ -1,12 +1,10 @@
 GO_VERSION := $(shell cat .go-version)
 GO  = GOFLAGS=-mod=readonly go
-
 GO_CMD          ?= go
+PROJECT_NAME 	:= kubebuilder-initializer-plugin
+UNAME := $(shell uname)
 
-PROJECT_NAME 	:= layout-kubebuilder-plugin
-
-
-all: init fmt test lint
+all: init fmt test lint compile
 
 help: ## Display this help screen
 	@echo "Makefile targets:"
@@ -26,3 +24,4 @@ include build/test.mk
 include build/compile.mk
 include build/release.mk
 include build/docker.mk
+include build/install.mk
