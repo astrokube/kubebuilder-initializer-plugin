@@ -34,7 +34,7 @@ cd kubebuilder-initializer-plugin
 make build install
 ```
 
-Keep in mind that the plug-in will be insstalled in the following directory *~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha*
+The executable will be copied to the following directory *~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha*
 If your os is OSX or *$HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha* for linux users.
 
 ## How this plugin work
