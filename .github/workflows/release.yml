@@ -8,29 +8,17 @@ jobs:
 
   preRelease:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cmd/client/templatizer-ui
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Setup node version 14
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Build and minimize code
-        run: yarn build
 
       - name: Save created files
         uses: actions/upload-artifact@v3
         with:
-          name: templatizer-ui-build
-          path: cmd/client/templatizer-ui/build
+          name: kubebuilder-initializer-plugin
+          path: cmd
 
   goreleaser:
     runs-on: ubuntu-20.04
@@ -40,17 +28,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v2
-
       - name: Unshallow
         run: git fetch --prune --unshallow
-
-      - name: Download created content in previous steps
-        uses: actions/download-artifact@v3
-        with:
-          name: templatizer-ui-build
-          path: cmd/client/templatizer-ui/build
 
       - name:  Set up Go 1.20
         uses: actions/setup-go@v4
@@ -58,17 +37,14 @@ jobs:
           go-version: 1.20
 
       - name: Install Go project
-        run: make install
-
-      - name: Snapcraft Login
-        run: snapcraft login --with <(echo "${{ secrets.SNAPCRAFT_LOGIN }}")
+        run: make build
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
         with:
+          distribution: goreleaser
           version: latest
-          args: release --rm-dist
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
-          FURY_TOKEN: ${{ secrets.FURYPUSHTOKEN }}
