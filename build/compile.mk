@@ -15,7 +15,7 @@ LDFLAGS   =  -s -w \
 build: ## build executable for the current os
 	@echo "=== $(PROJECT_NAME) === [ build          ]: building commands:"
 	@mkdir -p $(BUILD_DIR)/$(GOOS)
-	@$(GO_CMD) build -ldflags="$(LDFLAGS)" -trimpath -o $(BUILD_DIR)/$(GOOS)/$(PROJECT_NAME) $(APP_CMD)
+	@$(GO_CMD) build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(GOOS)/$(PROJECT_NAME) $(APP_CMD)
 
 .PHONY: build-all
 build-all: build-linux build-darwin build-windows
@@ -24,25 +24,25 @@ build-all: build-linux build-darwin build-windows
 build-linux: ## build executable for linux
 	@echo "=== $(PROJECT_NAME) === [ build-linux    ]: building executable for linux..."
 	@mkdir -p $(BUILD_DIR)/linux
-	@GOOS=linux $(GO_CMD) build -ldflags="$(LDFLAGS)" -trimpath -o $(BUILD_DIR)/linux/$(PROJECT_NAME) $(APP_CMD)
+	@GOOS=linux $(GO_CMD) build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/linux/$(PROJECT_NAME) $(APP_CMD)
 
 .PHONY: build-darwin
 build-darwin: ## build executable for darwin
 	@echo "=== $(PROJECT_NAME) === [ build-darwin   ]: building executable for darwin..."
 	@mkdir -p $(BUILD_DIR)/darwin
-	@GOOS=darwin $(GO_CMD) build -ldflags="$(LDFLAGS)" -trimpath -o $(BUILD_DIR)/darwin/$(PROJECT_NAME) $(APP_CMD)
+	@GOOS=darwin $(GO_CMD) build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/darwin/$(PROJECT_NAME) $(APP_CMD)
 
 .PHONY: build-windows
 build-windows: ## build executable for windows
 	@echo "=== $(PROJECT_NAME) === [ build-windows  ]: building executable for windows..."
 	@mkdir -p $(BUILD_DIR)/windows
-	@GOOS=windows $(GO_CMD) build -ldflags="$(LDFLAGS)" -trimpath -o $(BUILD_DIR)/windows/$(PROJECT_NAME).exe $(APP_CMD)
+	@GOOS=windows $(GO_CMD) build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/windows/$(PROJECT_NAME).exe $(APP_CMD)
 
 .PHONY: build-windows32
 build-windows32: ## build executable for windows32
 	@echo "=== $(PROJECT_NAME) === [ build-windows  ]: building executable for windows32..."
 	@mkdir -p $(BUILD_DIR)/windows
-	GOARCH=386 CGO_ENABLED=1 GOOS=windows $(GO_CMD) build -ldflags="$(LDFLAGS)" -trimpath -o $(BUILD_DIR)/windows/$(PROJECT_NAME) $(APP_CMD)
+	GOARCH=386 CGO_ENABLED=1 GOOS=windows $(GO_CMD) build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/windows/$(PROJECT_NAME) $(APP_CMD)
 
 .PHONY: build-clean
 build-clean: ## remove compiled files
