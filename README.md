@@ -1,7 +1,7 @@
 [![GitHub Release](https://img.shields.io/github/v/release/astrokube/kubebuilder-initializer-plugin)](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
 [![Go Reference](https://pkg.go.dev/badge/github.com/astrokube/kubebuilder-initializer-plugin.svg)](https://pkg.go.dev/github.com/astrokube/kubebuilder-initializer-plugin)
 [![go.mod](https://img.shields.io/github/go-mod/go-version/astrokube/kubebuilder-initializer-plugin)](go.mod)
-[![LICENSE](https://img.shields.io/github/license/astrokube/kubebuilder-initializer-plugin)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://img.shields.io/github/license/astrokube/kubebuilder-initializer-plugin))
 [![Build Status](https://img.shields.io/github/workflow/status/astrokube/kubebuilder-initializer-plugin/build)](https://github.com/astrokube/kubebuilder-initializer-plugin/actions?query=workflow%3Abuild+branch%3Amain)
 [![Go Report Card](https://goreportcard.com/badge/github.com/astrokube/kubebuilder-initializer-plugin)](https://goreportcard.com/report/github.com/astrokube/kubebuilder-initializer-plugin)
 [![Codecov](https://codecov.io/gh/astrokube/kubebuilder-initializer-plugin/branch/main/graph/badge.svg)](https://codecov.io/gh/astrokube/kubebuilder-initializer-plugin)
