@@ -44,7 +44,7 @@ archives:
         - README.md
         - LICENSE
     id: nix
-    builds: [macos, linux, freebsd]
+    builds: [macos, linux]
     format: tar.gz
   - <<: *archives_defaults
     id: windows
