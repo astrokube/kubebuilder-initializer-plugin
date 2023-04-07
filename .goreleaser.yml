@@ -42,8 +42,7 @@ archives:
   - <<: &archives_defaults
       files:
         - README.md
-        - CHANGELOG.md
-        - LICENSE.txt
+        - LICENSE
     id: nix
     builds: [macos, linux, freebsd]
     format: tar.gz
@@ -56,18 +55,9 @@ changelog:
   skip: true
 
 release:
-  name_template: "{{.ProjectName}} v{{.Version}}"
   github:
     owner: astrokube
     name: kubebuilder-initializer-plugin
-  draft: true
-  prerelease: auto
-  header: |
-    ## New release ({{ .Date }})
-    Welcome to this new release!
-  footer: |
-    ## Thanks!
-    Those were the changes on {{ .Tag }}!
 
 brews:
   - name: kubebuilder-initializer-plugin
