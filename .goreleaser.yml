@@ -1,45 +1,59 @@
 project_name: kubebuilder-initializer-plugin
+
 before:
   hooks:
     - go mod download
+    -
+
 builds:
-  - env:
-      - CGO_ENABLED=0
-    main: ./cmd
-    goos:
-      - darwin
-      - linux
-      - windows
-    goarch:
-      - amd64
-    mod_timestamp: '{{ .CommitTimestamp }}'
+  - <<: &build_defaults
+      env:
+        - CGO_ENABLED=0
+      ldflags: null
+      main: ./cmd
+      mod_timestamp: '{{ .CommitTimestamp }}'
+
+  - <<: *build_defaults
+    id: macos
+    goos: [darwin]
+    goarch: [amd64, arm64]
+
+  - <<: *build_defaults
+    id: linux
+    goos: [linux]
+    goarch: [386, arm, amd64, arm64]
+
+  - <<: *build_defaults
+    id: windows
+    goos: [windows]
+    goarch: [amd64, arm64]
+
+  - <<: *build_defaults
+    id: freebsd
+    goos: [freebsd]
+    goarch: [386, amd64]
+
 
 checksum:
   name_template: '{{ .ProjectName }}_v{{ .Version }}_SHA256SUMS'
   algorithm: sha256
 
 archives:
-  - format_overrides:
-      - goos: windows
-        format: zip
+  - <<: &archives_defaults
+      files:
+        - README.md
+        - CHANGELOG.md
+        - LICENSE.txt
+    id: nix
+    builds: [macos, linux, freebsd]
+    format: tar.gz
+  - <<: *archives_defaults
+    id: windows
+    builds: [windows]
+    format: zip
 
 changelog:
-  use: github
-  sort: asc
-  groups:
-    - title: Features
-      regexp: "^.*feat[(\\w)]*:+.*$"
-      order: 0
-    - title: 'Bug fixes'
-      regexp: "^.*fix[(\\w)]*:+.*$"
-      order: 1
-    - title: Others
-      order: 999
-  filters:
-    exclude:
-      - '^docs:'
-      - typo
-      - (?i)foo
+  skip: true
 
 release:
   name_template: "{{.ProjectName}} v{{.Version}}"

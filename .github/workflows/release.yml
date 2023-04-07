@@ -5,9 +5,8 @@ on:
     tags:
       - 'v*'
 jobs:
-
   goreleaser:
-    runs-on: ubuntu-23.10
+    runs-on: ubuntu-latest
     needs:
       - preRelease
     steps:
@@ -17,7 +16,7 @@ jobs:
       - name: Unshallow
         run: git fetch --prune --unshallow
 
-      - name:  Set up Go 1.20
+      - name: Set up Go 1.20
         uses: actions/setup-go@v4
         with:
           go-version: 1.20
@@ -37,3 +36,43 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+
+  update-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Draft Release
+        uses: cardinalby/git-get-release-action@v1
+        id: latest_draft_release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          draft: true
+          latest: true
+      - name: Update Title and Publish Release
+        id: publish_release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.repos.updateRelease({
+              draft: false,
+              name: '${{ github.ref_name }}',
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: ${{ steps.latest_draft_release.outputs.id }},
+              tag_name: '${{ github.ref_name }}'
+            })
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Update Changelog
+        id: update_changelog
+        uses: stefanzweifel/changelog-updater-action@v1
+        with:
+          latest-version: ${{ github.ref_name }}
+          release-notes: ${{ steps.latest_draft_release.outputs.body }}
+      - name: Commit updated Changelog
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: main
+          commit_message: Update CHANGELOG
+          file_pattern: CHANGELOG.md
+
