@@ -26,6 +26,13 @@ kuberbuilder properly installed in your computer.
 
 ### Download the executable files
 
+1. Visit the latest release at [Release page](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
+2. Download the version that works for you
+3. Extract the files in the tarball that you downloaded in the previous step
+4. Copy the executable file to the path used by Kubebuilder to read the external plugins
+   - OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+   - Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+
 ### Build from the code
 
 ```bash
