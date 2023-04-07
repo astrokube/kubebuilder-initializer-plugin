@@ -85,8 +85,8 @@ will make us to customize the template. By default, the plugin will take a file 
 you will need to pass an extra argument with the path to the file.
 
 
-4Initialize your project. Keep in mind that this plugin is used exclusively to initialize our project structure, so we should
-use also a plugin that supports aPI and webhook creation,for instance the `go.kubebuilder.io/v3` that is prpvided out
+4. Initialize your project. Keep in mind that this plugin is used exclusively to initialize our project structure, so we should
+use also a plugin that supports the APIs and webhooks creation,for instance the `go.kubebuilder.io/v3` that is prpvided out
 of the box by Kubbebuilder.
 
 ```bash
