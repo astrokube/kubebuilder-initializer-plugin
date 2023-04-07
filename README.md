@@ -40,9 +40,10 @@ git clone https://github.com/astrokube/kubebuilder-initializer-plugin.git
 cd kubebuilder-initializer-plugin
 make build install
 ```
-
-The executable will be copied to the following directory *~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha*
-If your os is OSX or *$HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha* for linux users.
+To check that installation was success, please check that the executable file was copied to the folder used by Kubebuilder 
+to read the plugins
+- OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+- Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
 
 ## How this plugin work
 
