@@ -12,7 +12,6 @@ A powerful Kubebuilder plugin to initialize dynamically the structure of your ku
 
 ## Getting started
 
-
 ## Installation
 
 ### Prerequisites
