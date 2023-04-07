@@ -7,8 +7,6 @@ on:
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
-    needs:
-      - preRelease
     steps:
       - name: Check out code
         uses: actions/checkout@v3
