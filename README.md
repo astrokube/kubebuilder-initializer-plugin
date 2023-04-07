@@ -69,11 +69,35 @@ of the box by Kubbebuilder.
 ```bash
 kubebuilder init  --plugins go.kubebuilder.io/v3,kubebuilder-layout/v1-alpha \
   --from "github.com/astrokube/kubebuilder-operator-template" \
-  --domain testing \
-  --repo github.com/astrokube/k8s-testing-operator --owner astrokube;
+  --domain astrokube \
+  --owner astrokube \
+  --repo github.com/astrokube/k8s-testing-operator
 ```
 
+The only argument that needs to be passed is the `from`
+
 *In the above example, the args `domain`, `repo` and `owner` are required by the plugin `go.kubebuilder.io/v3`.*
+
+**Non default branches**
+
+By default, the plugin will fetch the code in the default branch, buy we can specify a branch:
+
+```bash
+--from "github.com/astrokube/kubebuilder-operator-template#<branch>"
+````
+
+**With credentials**
+
+For those repositories that require authentication we can provide the user credentials or a token as It's shown on
+the below
+
+```bash
+--from "<user>:<password>@github.com/astrokube/kubebuilder-operator-template"
+...
+ --from "<token>@github.com/astrokube/kubebuilder-operator-template"
+```
+
+
 
 
 ## Contributing
