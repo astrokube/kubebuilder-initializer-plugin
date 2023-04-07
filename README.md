@@ -3,7 +3,6 @@
 [![go.mod](https://img.shields.io/github/go-mod/go-version/astrokube/kubebuilder-initializer-plugin)](go.mod)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://img.shields.io/github/license/astrokube/kubebuilder-initializer-plugin)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/astrokube/kubebuilder-initializer-plugin/build.yml?branch=main)](https://github.com/astrokube/kubebuilder-initializer-plugin/actions?query=workflow%3ABuild+branch%3Amain)
-[![Go Report Card](https://goreportcard.com/badge/github.com/astrokube/kubebuilder-initializer-plugin)](https://goreportcard.com/report/github.com/astrokube/kubebuilder-initializer-plugin)
 [![CodeQL](https://github.com/astrokube/kubebuilder-initializer-plugin/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/astrokube/kubebuilder-initializer-plugin/actions/workflows/codeql.yml)
 ---
 
@@ -12,7 +11,6 @@
 A powerful Kubebuilder plugin to initialize dynamically the structure of your kubebuilder operator repositories.
 
 ## Getting started
-
 
 ## Installation
 
@@ -26,6 +24,13 @@ kuberbuilder properly installed in your computer.
 
 ### Download the executable files
 
+1. Visit the latest release at [Release page](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
+2. Download the version that works for you
+3. Extract the files in the tarball that you downloaded in the previous step
+4. Copy the executable file to the path used by Kubebuilder to read the external plugins
+   - OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+   - Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+
 ### Build from the code
 
 ```bash
@@ -33,9 +38,10 @@ git clone https://github.com/astrokube/kubebuilder-initializer-plugin.git
 cd kubebuilder-initializer-plugin
 make build install
 ```
-
-The executable will be copied to the following directory *~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha*
-If your os is OSX or *$HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha* for linux users.
+To check that installation was success, please check that the executable file was copied to the folder used by Kubebuilder 
+to read the plugins
+- OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+- Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
 
 ## How this plugin work
 
