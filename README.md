@@ -20,6 +20,24 @@ kuberbuilder properly installed in your computer.
 
 #### Homebrew
 
+1. Add the Astrokube repo
+```bash
+brew tap astrokube/tools
+```
+
+2. Install Kubebyuilder Initializer plugin:
+```bash
+brew install kubebuilder-initializer-plugin
+```
+
+3. Please, create a symbolic link (this is required as the Kubebuilder cli will look at that folder to load the external plugins)
+
+```bash
+mkdir -p ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer-plugin/v1-alpha/
+ln -s /usr/local/Cellar/kubebuilder-initializer-plugin/0.1.0/bin/kubebuilder-initializer-plugin \
+  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer-plugin/v1-alpha/kubebuilder-initializer-plugin
+```
+
 #### Download the executable files
 
 1. Visit the latest release at [Release page](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
@@ -62,7 +80,12 @@ And the `kubebuilder-initializer-plugin/v1-alpha` is displayed as part of the li
 create your own template as described (here]() or alternatively you could take advantage of some of the well-known templates
 that you can find in [AWESOME_TEMPLATES.md](AWESOME_TEMPLATES.md)
 
-3. Initialize your project. Keep in mind that this plugin is used exclusively to initialize our project structure, so we should
+3. Once we have chosen the template that we want to use, we just need to write the yaml file  that contains the values that 
+will make us to customize the template. By default, the plugin will take a file named `.kubebuilder-layout.yaml`, otherwise 
+you will need to pass an extra argument with the path to the file.
+
+
+4Initialize your project. Keep in mind that this plugin is used exclusively to initialize our project structure, so we should
 use also a plugin that supports aPI and webhook creation,for instance the `go.kubebuilder.io/v3` that is prpvided out
 of the box by Kubbebuilder.
 
