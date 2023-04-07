@@ -10,19 +10,17 @@
 
 A powerful Kubebuilder plugin to initialize dynamically the structure of your kubebuilder operator repositories.
 
-## Getting started
-
-## Installation
-
 ### Prerequisites
 
-This is a plugin for the kubebuilder tool. In case of you haven't installed the tool yet, please visit the 
-[kubebuilder documentation](https://github.com/kubernetes-sigs/kubebuilder) and follow the instructions to get 
+This is a plugin for the kubebuilder tool. In case of you haven't installed the tool yet, please visit the
+[kubebuilder documentation](https://github.com/kubernetes-sigs/kubebuilder) and follow the instructions to get
 kuberbuilder properly installed in your computer.
 
-### Homebrew
+### Installation
 
-### Download the executable files
+#### Homebrew
+
+#### Download the executable files
 
 1. Visit the latest release at [Release page](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
 2. Download the version that works for you
@@ -31,7 +29,7 @@ kuberbuilder properly installed in your computer.
    - OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
    - Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
 
-### Build from the code
+#### Build from the code
 
 ```bash
 git clone https://github.com/astrokube/kubebuilder-initializer-plugin.git
@@ -43,10 +41,12 @@ to read the plugins
 - OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
 - Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
 
-## How this plugin work
+## Getting started
 
 To deep dive into how Kubebuilder deals with external plugins you can visit the following article 
-[Extensible CLI and Scaffolding Plugins - Phase 2](https://github.com/kubernetes-sigs/kubebuilder/blob/master/designs/extensible-cli-and-scaffolding-plugins-phase-2.md) 
+[Extensible CLI and Scaffolding Plugins - Phase 2](https://github.com/kubernetes-sigs/kubebuilder/blob/master/designs/extensible-cli-and-scaffolding-plugins-phase-2.md)
+
+Once you have installed the plugin you can 
 
 ## Contributing
 
