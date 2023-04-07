@@ -6,22 +6,8 @@ on:
       - 'v*'
 jobs:
 
-  preRelease:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-
-      - name: Save created files
-        uses: actions/upload-artifact@v3
-        with:
-          name: kubebuilder-initializer-plugin
-          path: cmd
-
   goreleaser:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-23.10
     needs:
       - preRelease
     steps:
@@ -36,8 +22,11 @@ jobs:
         with:
           go-version: 1.20
 
-      - name: Install Go project
-        run: make build
+      - name: Install Go deps & tools
+        run: make deps tools
+
+      - name: Build Go project
+        run: make build-all
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
