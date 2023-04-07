@@ -58,7 +58,7 @@ And the `kubebuilder-initializer-plugin/v1-alpha` is displayed as part of the li
 
 ![Kubebuilder pLugins](docs/assets/plugins.png)
 
-2. Decide which template you would like to use for creating the folder structure of your Kubebuilder operator. You can 
+2. Choose the template for scaffolding the initial structure of our Kubebuilder operator. You can 
 create your own template as described (here]() or alternatively you could take advantage of some of the well-known templates
 that you can find in [AWESOME_TEMPLATES.md](AWESOME_TEMPLATES.md)
 
@@ -73,6 +73,7 @@ kubebuilder init  --plugins go.kubebuilder.io/v3,kubebuilder-layout/v1-alpha \
   --repo github.com/astrokube/k8s-testing-operator --owner astrokube;
 ```
 
+*In the above example, the args `domain`, `repo` and `owner` are required by the plugin `go.kubebuilder.io/v3`.*
 
 
 ## Contributing
