@@ -17,6 +17,7 @@ import (
 	"github.com/go-git/go-git/v5/storage/memory"
 )
 
+//nolint:lll
 var repoRegex = regexp.MustCompile(`(?P<protocol>(https|ssh))://((?P<auth>(.*))(@))?(?P<path>([a-zA-Z0-9./\-_]+))(#(?P<branch>(.*)))?`)
 
 // A GitSource struct is used to fetch the template from a Git repository.
@@ -36,9 +37,12 @@ type GitSource struct {
 // (?P<protocol>(https|ssh))://((?P<auth>(.*))(@))?(?P<path>([a-zA-Z0-9./\-_]+))(#(?P<branch>(.*)))?
 //
 // The connection url is composed by the following parts
-// protocol: It's required a must be https or ssh depending on the chosen mechanism to establish the connection with the remote repository.
-// auth: It's an optional param (not required for public repositories) and we can provide both user credentials or a token. If we pass the credentials the format must be username:password
-// path: The repository url. For instance, github.com/astrokube/kubebuilder-initializer-plugin if we use the https protocol, or github.com/astrokube/kubebuilder-initializer-plugin.git if we use the ssh protocol
+// protocol: It's required a must be https or ssh depending on the chosen mechanism to establish the connection with the
+// remote repository.
+// auth: It's an optional param (not required for public repositories) and we can provide both user credentials or
+// a token. If we pass the credentials the format must be username:password
+// path: The repository url. For instance, github.com/astrokube/kubebuilder-initializer-plugin if we use the https
+// protocol, or github.com/astrokube/kubebuilder-initializer-plugin.git if we use the ssh protocol
 // branch: Optional param, we can use a specific branch by passing the name of the desired branch after symbol `#`
 func NewGitSource(conn string) *GitSource {
 	match := repoRegex.FindStringSubmatch(conn)

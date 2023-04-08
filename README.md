@@ -105,13 +105,15 @@ aliases:
 ```
 
 You can find some examples of templates in [AWESOME_TEMPLATES.md](AWESOME_TEMPLATES.md), and we encourage you to contribute
-with your own templates, so please, feel free to open a pull request with an entry in this file if you want to share a template with others.
+with your own templates, so please, feel free to open a pull request with an entry in this file if you want to share a 
+template with others.
 
 **TODO**
 We ask you to share an example files with the variables that need to be passed in order to customize the templates,
-See an example [here](). Only yaml files are supported (JSON could be supported for futures release If this was required  by the community )
-*For upcoming releases, the plugin will inspect the files in the templates and It will be able to generate the yaml file for you*
+See an example [here](). Only yaml files are supported (JSON could be supported for futures release If this was required  
+by the community )
 
+*For upcoming releases, the plugin will inspect the files in the templates and It will be able to generate the yaml file for you*
 
 ## Getting started
 
@@ -122,9 +124,9 @@ to create consistency and being  able to inject code when we run  other commands
 On the other hand, the `Kubebuilder Initializer plugin` must be used in conjunction with other plugins that will
 take the control once we need to create a Webhook or an API.
 
-To take advantage of the Initializer plugin, we just need a repository, that will be used as a template, and the variables file
-that will allow us to customize the template. By the default, the plugin read the variables from a named file `.kubebuilder-layout.yaml`, 
-but this can be customized If required. 
+To take advantage of the Initializer plugin, we just need a repository, that will be used as a template, and the 
+variables file  that will allow us to customize the template. By the default, the plugin read the variables from a 
+named file `.kubebuilder-layout.yaml`, but this can be customized If required. 
 
 To sum up, to initialize our project we just need to pass the argument `--from` and we could additionally pass the argument
 `--vars` in case of we don't want to use the default `.kubebuilder-layout.yaml`.
@@ -138,7 +140,8 @@ kubebuilder init  --plugins go.kubebuilder.io/v3,kubebuilder-initializer-plugin/
   --from "https://github.com/astrokube/kubebuilder-operator-template"
 ```
 
-Be aware that, in the above example, the arguments `domain`, `repo` and `owner` are required by the plugin `go.kubebuilder.io/v3`.
+Be aware that, in the above example, the arguments `domain`, `repo` and `owner` are required by the plugin 
+`go.kubebuilder.io/v3`.
 
 **Non default branches**
 

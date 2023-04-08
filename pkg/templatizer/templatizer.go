@@ -13,7 +13,7 @@ import (
 )
 
 // Templatize fetch the content in a remote source and replace the variables with the provided values in a file.
-// This function recieves the below three parameters:
+// This function receives the below three parameters:
 // - sourceType: So far only `git` is supported
 // - connString: url used to establish the connection with the remote source
 // - varsFile: Path to the file that contains the variables that will be used to replace values
