@@ -23,5 +23,4 @@ include build/code.mk
 include build/test.mk
 include build/compile.mk
 include build/release.mk
-include build/docker.mk
 include build/install.mk
