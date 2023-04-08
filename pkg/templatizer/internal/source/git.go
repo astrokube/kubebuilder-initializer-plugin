@@ -47,6 +47,7 @@ func NewGitSource(conn string) *GitSource {
 	for i, name := range repoRegex.SubexpNames() {
 		if i > 0 && i <= len(match) {
 			paramsMap[name] = match[i]
+			fmt.Printf("%s -> %s", name, match[i])
 		}
 	}
 	s := &GitSource{}
@@ -65,7 +66,7 @@ func NewGitSource(conn string) *GitSource {
 	}
 	s.refOrigin = "origin"
 	s.branch = paramsMap["branch"]
-	s.url = fmt.Sprintf("https://%s", paramsMap["path"])
+	s.url = paramsMap["path"]
 	return s
 }
 

@@ -134,10 +134,8 @@ implementation of operators in Go.
 
 ```bash
 kubebuilder init  --plugins go.kubebuilder.io/v3,kubebuilder-initializer-plugin/v1-alpha \
-  --from "github.com/astrokube/kubebuilder-operator-template" \
-  --domain astrokube \
-  --owner astrokube \
-  --repo https://github.com/astrokube/k8s-testing-operator
+  --domain astrokube --owner astrokube --repo github.com/astrokube/k8s-testing-operator \
+  --from "https://github.com/astrokube/kubebuilder-operator-template"
 ```
 
 Be aware that, in the above example, the arguments `domain`, `repo` and `owner` are required by the plugin `go.kubebuilder.io/v3`.
