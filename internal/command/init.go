@@ -33,11 +33,14 @@ var initMetadata = plugin.SubcommandMetadata{
 		"It scaffolds a repository with a previously created layout",
 	Examples: `
 	Scaffold with the defaults:
-	$ kubebuilder init --plugins astrokube-layout/v1
+	$ kubebuilder init --plugins kubebuilder-initializer-plugin/v1-alpha \
+		--from https://github.com/astronetes/operator-template
 
-	Scaffold with a specific layout:
-	$ kubebuilder init --plugins astrokube-layout/v1 --layout github.com/astronetes/operator-template 
-		--vars custom-vars.yml
+	Scaffold overwriting the default file for the variables:
+	$ kubebuilder init --plugins kubebuilder-initializer-plugin/v1-alpha \
+		--from https://github.com/astronetes/operator-template \
+		--vars path-to-my-custom-variables.yml
+		
 	`,
 }
 
