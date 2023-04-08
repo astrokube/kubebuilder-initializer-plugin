@@ -86,7 +86,6 @@ you will need to pass an extra argument with the path to the file.
 
 4. Initialize your project. Keep in mind that this plugin is used exclusively to initialize our project structure, so we should
 use also a plugin that supports the APIs and webhooks creation,for instance the `go.kubebuilder.io/v3` that is prpvided out
->>>>>>> main
 of the box by Kubbebuilder.
 
 ```bash
@@ -103,7 +102,7 @@ The only argument that needs to be passed is the `from`
 
 **Non default branches**
 
-By default, the plugin will fetch the code in the default branch, buy we can specify a branch:
+By default, the plugin will fetch the code in the default branch, but we can specify another branch:
 
 ```bash
 --from "github.com/astrokube/kubebuilder-operator-template#<branch>"

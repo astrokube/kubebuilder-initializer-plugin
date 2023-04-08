@@ -64,10 +64,8 @@ func (s *GitSource) GetTemplateContent() (map[string]string, error) {
 
 func (s *GitSource) loadFileSystem() error {
 	repo, err := git.Clone(memory.NewStorage(), memfs.New(), &git.CloneOptions{
-		URL:  s.url,
-		Auth: s.auth,
-		//Progress:        os.Stdout,
-		// InsecureSkipTLS: true,
+		URL:          s.url,
+		Auth:         s.auth,
 		SingleBranch: true,
 	})
 	if err != nil {
