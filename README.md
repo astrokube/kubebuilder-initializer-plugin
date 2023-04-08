@@ -8,19 +8,48 @@
 
 # Kubebuilder Initializer Plugin
 
-A powerful Kubebuilder plugin to initialize dynamically the structure of your kubebuilder operator repositories.
+A powerful Kubebuilder plugin to initialize dynamically the structure of your kubebuilder operator project.
 
 ### Prerequisites
 
-This is a plugin for the kubebuilder tool. In case of you haven't installed the tool yet, please visit the
-[kubebuilder documentation](https://github.com/kubernetes-sigs/kubebuilder) and follow the instructions to get
-kuberbuilder properly installed in your computer.
+This is a plugin for the kubebuilder cli tool If you don't have the Kubebuilder cli installed in your computer, please
+visit the official documentation, [kubebuilder documentation](https://github.com/kubernetes-sigs/kubebuilder).
 
 ### Installation
 
+We provide you a variety of alternatives to install the plugin in your computer, take the onw that best fits your needs.
+
+### Download the executable
+
+1. Visit the latest release at [Release page](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
+2. Download the version that works for you
+3. Extract the tarball
+4. Copy the executable file to the path used by Kubebuilder to read the external plugins
+   - OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+   - Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+
+### From the code
+
+To compile the code from your own computer, you just need to run the following commands
+
+```bash
+git clone https://github.com/astrokube/kubebuilder-initializer-plugin.git
+cd kubebuilder-initializer-plugin
+make build install
+```
+
+To check that the installation was success, verify that the executable was copied to the below path (depending on the
+operating system)
+
+- OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+- Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+
+
 #### Homebrew
 
-1. Add the Astrokube repo
+Additionally,  you could download the executable from our Astrokube Brew repository.
+
+1. Add the Astrokube Brew repository
 ```bash
 brew tap astrokube/tools
 ```
@@ -30,7 +59,7 @@ brew tap astrokube/tools
 brew install kubebuilder-initializer-plugin
 ```
 
-3. Please, create a symbolic link (this is required as the Kubebuilder cli will look at that folder to load the external plugins)
+3. You will need to create a symbolic link to the path used by Kubebuilder to read the external plugins.
 
 ```bash
 mkdir -p ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer-plugin/v1-alpha/
@@ -38,43 +67,16 @@ ln -s /usr/local/Cellar/kubebuilder-initializer-plugin/0.1.0/bin/kubebuilder-ini
   ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer-plugin/v1-alpha/kubebuilder-initializer-plugin
 ```
 
-#### Download the executable files
-
-1. Visit the latest release at [Release page](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
-2. Download the version that works for you
-3. Extract the files in the tarball that you downloaded in the previous step
-4. Copy the executable file to the path used by Kubebuilder to read the external plugins
-   - OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
-   - Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
-
-#### Build from the code
-
-```bash
-git clone https://github.com/astrokube/kubebuilder-initializer-plugin.git
-cd kubebuilder-initializer-plugin
-make build install
-```
-To check that installation was success, please check that the executable file was copied to the folder used by Kubebuilder 
-to read the plugins
-- OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
-- Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
-
 ## Getting started
 
-To deep dive into how Kubebuilder deals with external plugins you can visit the following article 
-[Extensible CLI and Scaffolding Plugins - Phase 2](https://github.com/kubernetes-sigs/kubebuilder/blob/master/designs/extensible-cli-and-scaffolding-plugins-phase-2.md)
+Once the plugin is installed in your computer, a new plugin is available for you to be used when running the Kubebuilder
+cli tool, you can run `kubebuilder help` to check it.
 
-Once you have installed the plugin you can use the Kubebuilder cli as usual. 
-
-1. Check that the plugin has been installed correctly
-
-```bash
-kubebuilder help
-```
-
-And the `kubebuilder-initializer-plugin/v1-alpha` is displayed as part of the list of available plugins.
+The `kubebuilder-initializer-plugin/v1-alpha` appears in the list of available plugins.
 
 ![Kubebuilder pLugins](docs/assets/plugins.png)
+
+
 
 2. Choose the template for scaffolding the initial structure of our Kubebuilder operator. You can 
 create your own template as described (here]() or alternatively you could take advantage of some of the well-known templates
@@ -85,9 +87,7 @@ will make us to customize the template. By default, the plugin will take a file 
 you will need to pass an extra argument with the path to the file.
 
 4. Initialize your project. Keep in mind that this plugin is used exclusively to initialize our project structure, so we should
-use also a plugin that supports the APIs and webhooks creation,for instance the `go.kubebuilder.io/v3` that is prpvided out
->>>>>>> main
-of the box by Kubbebuilder.
+use also a plugin that supports the APIs and webhooks creation,for instance the `go.kubebuilder.io/v3` that is prpvided out  of the box by Kubbebuilder.
 
 ```bash
 kubebuilder init  --plugins go.kubebuilder.io/v3,kubebuilder-layout/v1-alpha \
@@ -120,6 +120,11 @@ the below
  --from "<token>@github.com/astrokube/kubebuilder-operator-template"
 ```
 
+
+## Kubebuilder
+
+To deep dive into how Kubebuilder deals with external plugins you can visit the following article
+[Extensible CLI and Scaffolding Plugins - Phase 2](https://github.com/kubernetes-sigs/kubebuilder/blob/master/designs/extensible-cli-and-scaffolding-plugins-phase-2.md)
 
 
 
