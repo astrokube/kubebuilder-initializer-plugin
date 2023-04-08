@@ -66,6 +66,33 @@ mkdir -p ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initiali
 ln -s /usr/local/Cellar/kubebuilder-initializer-plugin/0.1.0/bin/kubebuilder-initializer-plugin \
   ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer-plugin/v1-alpha/kubebuilder-initializer-plugin
 ```
+## Define your own template
+
+The Kubebuilder Initializer plugin understand a template like a Git repository in which the name of the elements in the repository
+(both folders and files) and the content of the files can contain variables. 
+
+The plugin takes advantage of Go templates to process the templates;  that provides us with a very flexible way to define templates.
+That implies that we could not only to define variables 
+
+[go.mod](https://github.com/astrokube/kubebuilder-operator-template/blob/main/go.mod#L1)
+```text
+module {{.repository.server}}/{{.repository.owner}}/{{.repository.name}}
+```
+
+but also add some logic to our own templates
+
+[OWNERS_ALIASES](https://github.com/astrokube/kubebuilder-operator-template/blob/main/OWNERS_ALIASES#L4-L9)
+```text
+# See the OWNERS docs: https://git.k8s.io/community/contributors/guide/owners.md
+
+aliases:
+{{- range .owners}}
+  {{.alias}}:
+{{- range .members}}
+    - [{{.}}](https://github.com/{{.}})
+{{- end}}
+{{- end}}
+```
 
 ## Getting started
 
@@ -76,7 +103,7 @@ The `kubebuilder-initializer-plugin/v1-alpha` appears in the list of available p
 
 ![Kubebuilder pLugins](docs/assets/plugins.png)
 
-
+This plu
 
 2. Choose the template for scaffolding the initial structure of our Kubebuilder operator. You can 
 create your own template as described (here]() or alternatively you could take advantage of some of the well-known templates
