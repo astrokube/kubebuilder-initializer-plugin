@@ -53,7 +53,6 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 	default:
 		err = fmt.Errorf("unknown command '%s'", request.Command)
 	}
-
 	if err != nil {
 		response.Error = true
 		response.ErrorMsgs = []string{err.Error()}
@@ -69,8 +68,6 @@ func processFlags(request *external.PluginRequest, flags []external.Flag) *pflag
 			flagsSet.String(f.Name, f.Default, f.Usage)
 		case "boolean":
 			flagsSet.Bool(f.Name, f.Default == "true", f.Usage)
-		case "array":
-			flagsSet.StringArray(f.Name, []string{}, f.Usage)
 		default:
 			flagsSet.String(f.Name, f.Default, f.Usage)
 		}

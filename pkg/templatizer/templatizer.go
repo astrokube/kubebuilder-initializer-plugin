@@ -1,3 +1,5 @@
+// Package templatizer is an isolated package that could be used from other repositories as a library. That's the main
+// reason this package is under `pkg`.
 package templatizer
 
 import (
@@ -9,6 +11,12 @@ import (
 	"github.com/astrokube/kubebuilder-initializer-plugin/pkg/templatizer/internal/variables"
 	"gopkg.in/yaml.v3"
 )
+
+// Templatize fetch the content in a remote source and replace the variables with the provided values in a file.
+// This function recieves the below three parameters:
+// - sourceType: So far only `git` is supported
+// - connString: url used to establish the connection with the remote source
+// - varsFile: Path to the file that contains the variables that will be used to replace values
 
 func Templatize(sourceType string, connString string, varsFile string) (map[string]string, error) {
 	var content map[string]string
