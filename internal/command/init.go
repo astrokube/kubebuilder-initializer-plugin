@@ -26,27 +26,6 @@ var initFlags = []external.Flag{
 			"after the repository path (e.g., github.com/my-organization/my-repo#develop) or the credentials If " +
 			"required (e.g., username:password@github.com/my-organization/my-repo#develop)",
 	},
-	/**
-	{
-		Name:    flagDomain,
-		Type:    "string",
-		Default: "",
-		Usage:   "store the domain of the project. ",
-	},
-	{
-		Name:    flagRepo,
-		Type:    "string",
-		Default: "",
-		Usage: "name to use for go module (e.g., github.com/user/repo), defaults to the go package of the current " +
-			"working directory.",
-	},
-	{
-		Name:    flagProjectName,
-		Type:    "string",
-		Default: "",
-		Usage:   "the name of the project. This will be used to scaffold the manager data",
-	},
-	*/
 }
 
 var initMetadata = plugin.SubcommandMetadata{

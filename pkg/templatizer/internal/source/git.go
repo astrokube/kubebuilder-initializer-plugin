@@ -91,7 +91,7 @@ func (s *GitSource) loadFileSystem() error {
 		SingleBranch: true,
 	})
 	if err != nil {
-		return fmt.Errorf("error cloning the repository '%w'", err)
+		return fmt.Errorf("error cloning the repository from %s '%w'", s.url, err)
 	}
 	w, err := repo.Worktree()
 	if err != nil {
