@@ -4,7 +4,7 @@ GO_CMD          ?= go
 PROJECT_NAME 	:= kubebuilder-initializer-plugin
 UNAME := $(shell uname)
 
-all: init fmt test lint compile
+all: init fmt test lint build
 
 help: ## Display this help screen
 	@echo "Makefile targets:"
