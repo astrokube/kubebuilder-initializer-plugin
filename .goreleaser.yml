@@ -3,7 +3,6 @@ project_name: kubebuilder-initializer-plugin
 before:
   hooks:
     - go mod download
-    -
 
 builds:
   - <<: &build_defaults

@@ -5,11 +5,7 @@ BUILD_DATE = $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 VERSION  ?= $(shell git describe --tags --always --dirty | sed -e '/^v/s/^v\(.*\)$$/\1/g')
 VERSION_TAG  := $(shell git describe --tags --always --abbrev=0 | sed -e '/^v/s/^v\(.*\)$$/\1/g')
 
-LDFLAGS   =  -s -w \
-	-X github.com/astrokube/kubebuilder-initializer-plugin/internal/info.Commit=$(COMMIT) \
-	-X github.com/astrokube/kubebuilder-initializer-plugin/internal/info.Version=$(VERSION) \
-	-X github.com/astrokube/kubebuilder-initializer-plugin/internal/info.BuildDate=$(BUILD_DATE) \
-	-X github.com/astrokube/kubebuilder-initializer-plugin/internal/info.Compiler=$(GOLANG_VERSION)
+LDFLAGS   =  -s -w
 
 .PHONY: build
 build: ## build executable for the current os

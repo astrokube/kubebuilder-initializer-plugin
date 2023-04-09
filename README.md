@@ -8,19 +8,48 @@
 
 # Kubebuilder Initializer Plugin
 
-A powerful Kubebuilder plugin to initialize dynamically the structure of your kubebuilder operator repositories.
+A powerful Kubebuilder plugin to initialize dynamically the structure of your kubebuilder operator project.
 
-### Prerequisites
+## Prerequisites
 
-This is a plugin for the kubebuilder tool. In case of you haven't installed the tool yet, please visit the
-[kubebuilder documentation](https://github.com/kubernetes-sigs/kubebuilder) and follow the instructions to get
-kuberbuilder properly installed in your computer.
+This is a plugin for the kubebuilder cli tool If you don't have the Kubebuilder cli installed in your computer, please
+visit the official documentation, [kubebuilder documentation](https://github.com/kubernetes-sigs/kubebuilder).
 
-### Installation
+## Installation
 
-#### Homebrew
+We provide you a variety of alternatives to install the plugin in your computer, take the onw that best fits your needs.
 
-1. Add the Astrokube repo
+### Download the executable
+
+1. Visit the latest release at [Release page](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
+2. Download the version that works for you
+3. Extract the tarball
+4. Copy the executable file to the path used by Kubebuilder to read the external plugins
+   - OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+   - Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+
+### From the code
+
+To compile the code from your own computer, you just need to run the following commands
+
+```bash
+git clone https://github.com/astrokube/kubebuilder-initializer-plugin.git
+cd kubebuilder-initializer-plugin
+make build install
+```
+
+To check that the installation was success, verify that the executable was copied to the below path (depending on the
+operating system)
+
+- OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+- Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+
+
+### Homebrew
+
+Additionally,  you could download the executable from our Astrokube Brew repository.
+
+1. Add the Astrokube Brew repository
 ```bash
 brew tap astrokube/tools
 ```
@@ -30,7 +59,7 @@ brew tap astrokube/tools
 brew install kubebuilder-initializer-plugin
 ```
 
-3. Please, create a symbolic link (this is required as the Kubebuilder cli will look at that folder to load the external plugins)
+3. You will need to create a symbolic link to the path used by Kubebuilder to read the external plugins.
 
 ```bash
 mkdir -p ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer-plugin/v1-alpha/
@@ -38,72 +67,85 @@ ln -s /usr/local/Cellar/kubebuilder-initializer-plugin/0.1.0/bin/kubebuilder-ini
   ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer-plugin/v1-alpha/kubebuilder-initializer-plugin
 ```
 
-#### Download the executable files
+### Verify the installation
 
-1. Visit the latest release at [Release page](https://github.com/astrokube/kubebuilder-initializer-plugin/releases)
-2. Download the version that works for you
-3. Extract the files in the tarball that you downloaded in the previous step
-4. Copy the executable file to the path used by Kubebuilder to read the external plugins
-   - OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
-   - Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
+Once the plugin is installed in your computer, a new plugin is available for you to be used when running the Kubebuilder
+cli tool, you can run `kubebuilder help` to check it.
 
-#### Build from the code
-
-```bash
-git clone https://github.com/astrokube/kubebuilder-initializer-plugin.git
-cd kubebuilder-initializer-plugin
-make build install
-```
-To check that installation was success, please check that the executable file was copied to the folder used by Kubebuilder 
-to read the plugins
-- OSX:  ~/Library/Application\ Support/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
-- Linux: $HOME/.config/kubebuilder/plugins/kubebuilder-initializer/v1-alpha
-
-## Getting started
-
-To deep dive into how Kubebuilder deals with external plugins you can visit the following article 
-[Extensible CLI and Scaffolding Plugins - Phase 2](https://github.com/kubernetes-sigs/kubebuilder/blob/master/designs/extensible-cli-and-scaffolding-plugins-phase-2.md)
-
-Once you have installed the plugin you can use the Kubebuilder cli as usual. 
-
-1. Check that the plugin has been installed correctly
-
-```bash
-kubebuilder help
-```
-
-And the `kubebuilder-initializer-plugin/v1-alpha` is displayed as part of the list of available plugins.
+The `kubebuilder-initializer-plugin/v1-alpha` appears in the list of available plugins.
 
 ![Kubebuilder pLugins](docs/assets/plugins.png)
 
-2. Choose the template for scaffolding the initial structure of our Kubebuilder operator. You can 
-create your own template as described (here]() or alternatively you could take advantage of some of the well-known templates
-that you can find in [AWESOME_TEMPLATES.md](AWESOME_TEMPLATES.md)
+## Define your own template
 
-3. Once we have chosen the template that we want to use, we just need to write the yaml file  that contains the values that 
-will make us to customize the template. By default, the plugin will take a file named `.kubebuilder-layout.yaml`, otherwise 
-you will need to pass an extra argument with the path to the file.
+The Kubebuilder Initializer plugin understand a template like a Git repository in which the name of the elements in the repository
+(both folders and files) and the content of the files can contain variables. 
 
-4. Initialize your project. Keep in mind that this plugin is used exclusively to initialize our project structure, so we should
-use also a plugin that supports the APIs and webhooks creation,for instance the `go.kubebuilder.io/v3` that is prpvided out
->>>>>>> main
-of the box by Kubbebuilder.
+The plugin takes advantage of Go templates to process the templates;  that provides us with a very flexible way to define templates.
+That implies that we could not only to define variables 
 
-```bash
-kubebuilder init  --plugins go.kubebuilder.io/v3,kubebuilder-layout/v1-alpha \
-  --from "github.com/astrokube/kubebuilder-operator-template" \
-  --domain astrokube \
-  --owner astrokube \
-  --repo github.com/astrokube/k8s-testing-operator
+[go.mod](https://github.com/astrokube/kubebuilder-operator-template/blob/main/go.mod#L1)
+```text
+module {{.repository.server}}/{{.repository.owner}}/{{.repository.name}}
 ```
 
-The only argument that needs to be passed is the `from`
+but also add some logic to our own templates
 
-*In the above example, the args `domain`, `repo` and `owner` are required by the plugin `go.kubebuilder.io/v3`.*
+[OWNERS_ALIASES](https://github.com/astrokube/kubebuilder-operator-template/blob/main/OWNERS_ALIASES#L4-L9)
+```text
+# See the OWNERS docs: https://git.k8s.io/community/contributors/guide/owners.md
+
+aliases:
+{{- range .owners}}
+  {{.alias}}:
+{{- range .members}}
+    - [{{.}}](https://github.com/{{.}})
+{{- end}}
+{{- end}}
+```
+
+You can find some examples of templates in [AWESOME_TEMPLATES.md](AWESOME_TEMPLATES.md), and we encourage you to contribute
+with your own templates, so please, feel free to open a pull request with an entry in this file if you want to share a 
+template with others.
+
+**TODO**
+We ask you to share an example files with the variables that need to be passed in order to customize the templates,
+See an example [here](). Only yaml files are supported (JSON could be supported for futures release If this was required  
+by the community )
+
+*For upcoming releases, the plugin will inspect the files in the templates and It will be able to generate the yaml file for you*
+
+## Getting started
+
+This plugin is used exclusively in the initial scaffolding (`kubebuilder init`) and It's compatible with any other plugin.
+When we run the `init` command, the Kubebuilder cli creates  the PROJECT file, this  is  the main piece for Kubebuilder 
+to create consistency and being  able to inject code when we run  other commands such as `kubebuildfer create api` or 
+`kubebuilder create webhook` 
+On the other hand, the `Kubebuilder Initializer plugin` must be used in conjunction with other plugins that will
+take the control once we need to create a Webhook or an API.
+
+To take advantage of the Initializer plugin, we just need a repository, that will be used as a template, and the 
+variables file  that will allow us to customize the template. By the default, the plugin read the variables from a 
+named file `.kubebuilder-initializer.yaml`, but this can be customized If required. 
+
+To sum up, to initialize our project we just need to pass the argument `--from` and we could additionally pass the argument
+`--vars` in case of we don't want to use the default `.kubebuilder-initializer.yaml`.
+
+In the below example, we would use our plugin in conjunction with the  `go.kubebuilder.io/v3` that help us to work with 
+implementation of operators in Go.
+
+```bash
+kubebuilder init  --plugins go.kubebuilder.io/v3,kubebuilder-initializer-plugin/v1-alpha \
+  --domain astrokube --owner astrokube --repo github.com/astrokube/k8s-testing-operator \
+  --from "https://github.com/astrokube/kubebuilder-operator-template"
+```
+
+Be aware that, in the above example, the arguments `domain`, `repo` and `owner` are required by the plugin 
+`go.kubebuilder.io/v3`.
 
 **Non default branches**
 
-By default, the plugin will fetch the code in the default branch, buy we can specify a branch:
+By default, the plugin will fetch the code in the default branch, but we can specify another branch:
 
 ```bash
 --from "github.com/astrokube/kubebuilder-operator-template#<branch>"
@@ -120,6 +162,11 @@ the below
  --from "<token>@github.com/astrokube/kubebuilder-operator-template"
 ```
 
+
+## Kubebuilder
+
+To deep dive into how Kubebuilder deals with external plugins you can visit the following article
+[Extensible CLI and Scaffolding Plugins - Phase 2](https://github.com/kubernetes-sigs/kubebuilder/blob/master/designs/extensible-cli-and-scaffolding-plugins-phase-2.md)
 
 
 
