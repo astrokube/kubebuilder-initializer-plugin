@@ -70,6 +70,7 @@ func NewGitSource(conn string) *GitSource {
 	s.refOrigin = "origin"
 	s.branch = paramsMap["branch"]
 	s.url = fmt.Sprintf("%s://%s", paramsMap["protocol"], paramsMap["path"])
+
 	return s
 }
 

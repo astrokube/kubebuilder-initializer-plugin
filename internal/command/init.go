@@ -12,7 +12,13 @@ import (
 
 var initFlags = []external.Flag{
 	{
-		Name:    "vars",
+		Name:    flagSource,
+		Type:    "string",
+		Default: "git",
+		Usage:   "Type of source. The only supported value is 'git'",
+	},
+	{
+		Name:    flagVars,
 		Type:    "string",
 		Default: ".kubebuilder-initializer.yaml",
 		Usage: "path to the file that contains the variables to be used. By default the plugin uses the file in path ." +
@@ -22,10 +28,47 @@ var initFlags = []external.Flag{
 		Name:    flagFrom,
 		Type:    "string",
 		Default: "",
-		Usage: "repository path (e.g., github.com/my-organization/my-repo). We can pass a specific branch " +
-			"after the repository path (e.g., github.com/my-organization/my-repo#develop) or the credentials If " +
-			"required (e.g., username:password@github.com/my-organization/my-repo#develop)",
+		Usage:   "repository path (e.g., github.com/my-organization/my-repo).",
 	},
+	/**
+	{
+		Name:    "component-config",
+		Type:    "boolean",
+		Default: "false",
+		Usage:   "create a versioned ComponentConfig file, may be 'true' or 'false'",
+	},
+	{
+		Name:    "domain",
+		Type:    "string",
+		Default: "my.domain",
+		Usage:   "domain for groups (default \"my.domain\")",
+	},
+	{
+		Name:    "fetch-deps",
+		Type:    "boolean",
+		Default: "true",
+		Usage:   "ensure dependencies are downloaded (default true)",
+	},
+	{
+		Name:    "license",
+		Type:    "string",
+		Default: "",
+		Usage:   "license to use to boilerplate, may be one of 'apache2', 'none' (default \"apache2\")",
+	},
+	{
+		Name:    "owner",
+		Type:    "string",
+		Default: "",
+		Usage:   "owner to add to the copyright",
+	},
+	**/
+
+	/**
+	  --project-name string      name of this project
+	  --project-version string   project version (default "3")
+	  --repo string              name to use for go module (e.g., github.com/user/repo), defaults to the go package of the current working directory.
+	  --skip-go-version-check    if specified, skip checking the Go versio
+	*/
 }
 
 var initMetadata = plugin.SubcommandMetadata{
@@ -45,14 +88,18 @@ var initMetadata = plugin.SubcommandMetadata{
 }
 
 func runInit(flags *pflag.FlagSet) (map[string]string, error) {
-	source, _ := flags.GetString(flagSource)
-	from, _ := flags.GetString(flagFrom)
-	vars, _ := flags.GetString(flagVars)
-	/**
-	domain, _ := flags.GetString(flagDomain)
-	projectName, _ := flags.GetString(flagProjectName)
-	repo, _ := flags.GetString(flagRepo)
-	**/
+	source, err := flags.GetString(flagSource)
+	if err != nil {
+		return nil, err
+	}
+	from, err := flags.GetString(flagFrom)
+	if err != nil {
+		return nil, err
+	}
+	vars, err := flags.GetString(flagVars)
+	if err != nil {
+		return nil, err
+	}
 	content, err := templatizer.Templatize(source, from, vars)
 	if err != nil {
 		return content, err

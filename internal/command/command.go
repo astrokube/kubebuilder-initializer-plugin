@@ -2,20 +2,17 @@ package command
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/spf13/pflag"
 	"sigs.k8s.io/kubebuilder/v3/pkg/plugin/external"
 )
 
 const (
-	flagVars = "vars"
-
-	flagDomain      = "domain"
-	flagRepo        = "repo"
-	flagProjectName = "project-name"
-	flagFrom        = "from"
-	flagSource      = "source"
-	flagInit        = "init"
+	flagVars   = "vars"
+	flagFrom   = "from"
+	flagSource = "source"
+	flagInit   = "init"
 )
 
 const (
@@ -33,16 +30,26 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 	}
 
 	var err error
+	var flagSet *pflag.FlagSet
 
 	switch request.Command {
 	case ActionInit:
-		flagSet := processFlags(request, initFlags)
+		flagSet, err = processFlags(request, initFlags)
+		if err != nil {
+			break
+		}
 		response.Universe, err = runInit(flagSet)
 	case ActionFlags:
-		flagSet := processFlags(request, flagsFlags)
+		flagSet, err = processFlags(request, flagsFlags)
+		if err != nil {
+			break
+		}
 		response.Flags, err = runFlags(flagSet)
 	case ActionMetadata:
-		flagSet := processFlags(request, metadataFlags)
+		flagSet, err = processFlags(request, metadataFlags)
+		if err != nil {
+			break
+		}
 		response.Metadata, err = runMetadata(flagSet)
 	case ActionCreateAPI:
 		break
@@ -60,7 +67,7 @@ func Run(request *external.PluginRequest) external.PluginResponse {
 	return response
 }
 
-func processFlags(request *external.PluginRequest, flags []external.Flag) *pflag.FlagSet {
+func processFlags(request *external.PluginRequest, flags []external.Flag) (*pflag.FlagSet, error) {
 	flagsSet := pflag.NewFlagSet(fmt.Sprintf("%sFlags", request.Command), pflag.ContinueOnError)
 	for _, f := range flags {
 		switch f.Type {
@@ -72,7 +79,28 @@ func processFlags(request *external.PluginRequest, flags []external.Flag) *pflag
 			flagsSet.String(f.Name, f.Default, f.Usage)
 		}
 	}
-	_ = flagsSet.Parse(request.Args)
+	args := filterProvidedArgs(request.Args, flags)
+	if err := flagsSet.Parse(args); err != nil {
+		return nil, err
+	}
+	return flagsSet, nil
+}
 
-	return flagsSet
+func filterProvidedArgs(args []string, supportedFlags []external.Flag) (out []string) {
+	supportedFlagsMap := make(map[string]struct{}, len(supportedFlags))
+	for i := range supportedFlags {
+		key := fmt.Sprintf("--%s", supportedFlags[i].Name)
+		supportedFlagsMap[key] = struct{}{}
+	}
+	expectArgValue := false
+	for i := range args {
+		arg := args[i]
+		if expectArgValue {
+			out = append(out, arg)
+		} else if _, ok := supportedFlagsMap[args[i]]; ok {
+			out = append(out, arg)
+		}
+		expectArgValue = strings.HasPrefix(arg, "--")
+	}
+	return
 }
